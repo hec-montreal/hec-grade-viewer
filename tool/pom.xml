@@ -29,6 +29,7 @@
 			<scope>compile</scope>
 		</dependency>
 	
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -49,6 +50,7 @@
 			<version>${kernel.spring.version}</version>
 		</dependency>
 
+		<!-- Jsp -->
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>

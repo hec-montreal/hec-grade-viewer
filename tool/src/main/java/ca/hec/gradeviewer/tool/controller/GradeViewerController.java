@@ -19,7 +19,7 @@ public class GradeViewerController {
 	{
 		ModelAndView ret = new ModelAndView("index");
 		
-		ret.addObject("message", gradeViewerService.getMessage());
+		ret.addObject("message", gradeViewerService.getUserId("simon"));
 		
 		return ret;
 	}

@@ -17,5 +17,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<bean id="ca.hec.gradeviewer.api.GradeViewerService" class="ca.hec.gradeviewer.impl.GradeViewerServiceImpl"></bean>
+	<bean id="ca.hec.gradeviewer.api.GradeViewerService" class="ca.hec.gradeviewer.impl.GradeViewerServiceImpl">
+		<property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+	</bean>
 </beans>
