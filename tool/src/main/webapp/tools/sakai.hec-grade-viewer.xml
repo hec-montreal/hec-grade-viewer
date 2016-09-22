@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<registration>
+	<tool id="sakai.hec-grade-viewer" title="HEC Grade Viewer" description="Tool for viewing HEC grades">
+		<configuration name="help.url" value="https://confluence.hec.ca:8443/display/aidezc2/Archives+de+plan+de+cours" />
+	</tool>
+</registration>
