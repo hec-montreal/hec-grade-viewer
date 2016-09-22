@@ -13,6 +13,6 @@
 	</head>
 	
 	<body id="body" class="portletBody">
-		${message}
+		<textarea style="width: 600px; height: 400px;">${json}</textarea>
 	</body>
 </html>
