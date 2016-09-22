@@ -21,7 +21,15 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>ca.hec</groupId>
+			<artifactId>hec-grade-viewer-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>ca.hec</groupId>
+			<artifactId>hec-grade-viewer-impl</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

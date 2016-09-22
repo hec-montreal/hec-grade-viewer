@@ -10,7 +10,7 @@
 		
 		<init-param>
 			<param-name>main-page</param-name>
-			<param-value>/index.jsp</param-value>
+			<param-value>/index</param-value>
 		</init-param>
 		
 		<load-on-startup>0</load-on-startup>
@@ -46,24 +46,13 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>HecGradeViewerViewRendererServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+		<servlet-name>HecGradeViewer</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
-	<servlet>
-		<servlet-name>HecGradeViewer</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	
 	<servlet-mapping>
 		<servlet-name>HecGradeViewer</servlet-name>
-		<url-pattern>*.htm</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>HecGradeViewer</servlet-name>
-		<url-pattern>*.json</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>

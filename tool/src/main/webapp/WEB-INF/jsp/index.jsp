@@ -13,6 +13,6 @@
 	</head>
 	
 	<body id="body" class="portletBody">
-		Hello
+		${message}
 	</body>
 </html>
