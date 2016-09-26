@@ -11,4 +11,6 @@ public interface GradeViewerService {
 	public User getUserByMatricule(String matricule) throws UserNotDefinedException;
 
 	public List<Site> getUserSites(User user);
+
+	public List<AssignmentWithGrade> getUserAssignments(User user);
 }

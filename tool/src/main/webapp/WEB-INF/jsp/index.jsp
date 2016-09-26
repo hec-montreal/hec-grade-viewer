@@ -13,6 +13,18 @@
 	</head>
 	
 	<body id="body" class="portletBody">
-		<textarea style="width: 600px; height: 400px;">${json}</textarea>
+		<input type="text" id="matricule" />
+		
+		<button id="btnTest" onclick="javascript:test();">Test</button>
+	
+		<textarea id="log" style="width: 600px; height: 400px;"></textarea>
+		
+		<script>
+			function test() {
+				$.get($("#matricule").val() + "/grades", function (data) {
+					$("#log").val(JSON.stringify(data));
+				});
+			}
+		</script>
 	</body>
 </html>
