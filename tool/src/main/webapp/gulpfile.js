@@ -12,8 +12,8 @@ var gulp         = require('gulp'),
     //uglify        = require('gulp-uglify'),
     // browserify    = require('gulp-browserify'),
     ts            = require('gulp-typescript'),
-    browserify    = require('browserify'),
-    source        = require('vinyl-source-stream');
+    browserify    = require('browserify');
+    //source        = require('vinyl-source-stream');
  
 
 // Img task
