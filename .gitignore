@@ -3,3 +3,8 @@
 .classpath
 target
 velocity.log
+tool/src/main/webapp/dest/component/
+tool/src/main/webapp/dest/hecGradeViewer.js
+tool/src/main/webapp/dest/module/
+tool/src/main/webapp/node/
+tool/src/main/webapp/node_modules/
