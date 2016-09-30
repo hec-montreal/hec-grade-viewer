@@ -1,6 +1,6 @@
 package ca.hec.gradeviewer.tool.controller;
 
-import org.sakaiproject.user.api.User;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
-import ca.hec.gradeviewer.api.GradeViewerService;
-import ca.hec.gradeviewer.tool.entities.GradesResponse;
+import ca.hec.gradeviewer.GradeViewerService;
+import ca.hec.gradeviewer.entity.User;
+import ca.hec.gradeviewer.tool.entity.GradesResponse;
 
 @Controller
 public class GradeViewerController {
@@ -27,15 +30,18 @@ public class GradeViewerController {
 	}
 
 	@RequestMapping(value = "/{matricule}/grades", method = RequestMethod.GET)
-	public @ResponseBody GradesResponse getUserGrades(@PathVariable(value = "matricule") String matricule)
-			throws UserNotDefinedException {
+	public @ResponseBody String getUserGrades(@PathVariable(value = "matricule") String matricule) throws UserNotDefinedException, JsonProcessingException, IdUnusedException {
 		User user = gradeViewerService.getUserByMatricule(matricule);
 
 		GradesResponse ret = new GradesResponse();
 
-		ret.setUserId(user.getId());
-		ret.setAssignments(gradeViewerService.getUserAssignments(user));
+		ret.setUser(user);
+		ret.setCourses(gradeViewerService.getUserCourses(user));
 
-		return ret;
+		ObjectMapper mapper = new ObjectMapper();
+
+		mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+		return mapper.writeValueAsString(ret);
 	}
 }

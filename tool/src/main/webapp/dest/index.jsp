@@ -34,7 +34,9 @@
 		<script>
 			function test() {
 				$.get($("#matricule").val() + "/grades", function (data) {
-					$("#log").val(JSON.stringify(data));
+					$("#log").val(data);
+					
+					console.log(JSON.parse(data));
 				});
 			}
 		</script>
