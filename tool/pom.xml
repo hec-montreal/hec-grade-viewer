@@ -133,22 +133,65 @@
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
 		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
-					<ouputDirectory>${project.build.directory}</ouputDirectory>
+					<warSourceDirectory>${basedir}/src/main/webapp/dest</warSourceDirectory>
 				</configuration>
 			</plugin>
+			
+		<plugin>
+	        <groupId>nl.geodienstencentrum.maven</groupId>
+	        <artifactId>sass-maven-plugin</artifactId>
+	        <version>2.5</version>
+	    </plugin>
+
+	 <plugin>
+       <groupId>com.github.eirslett</groupId>
+       <artifactId>frontend-maven-plugin</artifactId>
+       <version>0.0.27</version>
+       <configuration>
+       		<workingDirectory>src/main/webapp</workingDirectory>
+       </configuration>
+
+	    <executions>
+		   <execution>
+			    <id>install node and npm</id>
+			    <goals>
+			        <goal>install-node-and-npm</goal>
+			    </goals>
+			    <configuration>
+			        <nodeVersion>v4.6.0</nodeVersion>
+			        <npmVersion>3.10.8</npmVersion>
+			    </configuration>
+			</execution>
+
+			<execution>
+			    <id>npm install</id>
+			    <goals>
+			        <goal>npm</goal>
+			    </goals>
+
+			    <configuration>
+			        <arguments>install</arguments>
+			    </configuration>
+			</execution>
+
+		     <execution>
+			    <id>gulp build </id>
+			    <goals>
+			        <goal>gulp </goal>
+			    </goals>
+			    <configuration>
+			        <arguments>deploy-maven</arguments>
+			    </configuration>
+			</execution>
+
+		   </executions>
+	     </plugin>
 		</plugins>
 	</build>
 </project>
