@@ -26,7 +26,7 @@ public class GradeViewerController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView getIndexPage() throws UserNotDefinedException, JsonProcessingException {
-		return new ModelAndView("index");
+		return new ModelAndView("index.jsp");
 	}
 
 	@RequestMapping(value = "/{matricule}/grades", method = RequestMethod.GET)

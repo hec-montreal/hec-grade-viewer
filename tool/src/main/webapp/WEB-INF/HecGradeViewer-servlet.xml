@@ -13,8 +13,8 @@
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="" />
-		<property name="suffix" value=".jsp" />
+		<property name="prefix" value="WEB-INF/jsp/" />
+		<property name="suffix" value="" />
 	</bean>
 	
 	<bean id="ca.hec.gradeviewer.api.GradeViewerService" class="ca.hec.gradeviewer.GradeViewerServiceImpl">

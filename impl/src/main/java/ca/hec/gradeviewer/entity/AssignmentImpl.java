@@ -3,7 +3,10 @@ package ca.hec.gradeviewer.entity;
 import java.util.Date;
 
 import ca.hec.gradeviewer.util.DateUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class AssignmentImpl implements Assignment {
 
 	private String id;
@@ -12,6 +15,8 @@ public class AssignmentImpl implements Assignment {
 	private String categoryId;
 	private String categoryName;
 	private double points;
+
+	@Setter
 	private Grade grade;
 
 	public AssignmentImpl(org.sakaiproject.service.gradebook.shared.Assignment assignment) {
@@ -24,47 +29,7 @@ public class AssignmentImpl implements Assignment {
 	}
 
 	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public Date getDate() {
-		return date;
-	}
-
-	@Override
 	public String getFormattedDate() {
 		return DateUtil.formatDate(getDate());
-	}
-
-	@Override
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	@Override
-	public double getPoints() {
-		return points;
-	}
-
-	@Override
-	public Grade getGrade() {
-		return grade;
-	}
-
-	@Override
-	public void setGrade(Grade grade) {
-		this.grade = grade;
 	}
 }

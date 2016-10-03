@@ -1,5 +1,8 @@
 package ca.hec.gradeviewer.entity;
 
+import lombok.Getter;
+
+@Getter
 public class GradeImpl implements Grade {
 
 	private String value;
@@ -10,11 +13,6 @@ public class GradeImpl implements Grade {
 		this.value = value;
 		this.comment = comment;
 		this.published = published;
-	}
-
-	@Override
-	public String getValue() {
-		return value;
 	}
 
 	@Override
@@ -29,15 +27,5 @@ public class GradeImpl implements Grade {
 	@Override
 	public boolean isNull() {
 		return value == null;
-	}
-
-	@Override
-	public String getComment() {
-		return comment;
-	}
-
-	@Override
-	public boolean isPublished() {
-		return published;
 	}
 }

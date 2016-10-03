@@ -17,28 +17,25 @@
 	</parent>
 
 	<dependencies>
+		<!-- Project -->
 		<dependency>
 			<groupId>ca.hec</groupId>
 			<artifactId>hec-grade-viewer-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>ca.hec</groupId>
 			<artifactId>hec-grade-viewer-impl</artifactId>
 			<scope>compile</scope>
 		</dependency>
-	
+
+		<!-- Sakai -->
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-api</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>org.sakaiproject.edu-services.gradebook</groupId>
-            <artifactId>gradebook-service-api</artifactId>
-        </dependency>
-	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -70,20 +67,20 @@
 		</dependency>
 
 		<!-- Jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 
 		<!-- Jsp -->
 		<dependency>
@@ -114,6 +111,7 @@
 			<artifactId>sakai-jsp-adapter</artifactId>
 			<version>0.10-K1</version>
 			<scope>runtime</scope>
+			
 			<exclusions>
 				<exclusion>
 					<groupId>org.sakaiproject</groupId>
@@ -125,73 +123,81 @@
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		
+
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/java</directory>
+				
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
 		</resources>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				
 				<configuration>
 					<warSourceDirectory>${basedir}/src/main/webapp/dest</warSourceDirectory>
 				</configuration>
 			</plugin>
-			
-		<plugin>
-	        <groupId>nl.geodienstencentrum.maven</groupId>
-	        <artifactId>sass-maven-plugin</artifactId>
-	        <version>2.5</version>
-	    </plugin>
 
-	 <plugin>
-       <groupId>com.github.eirslett</groupId>
-       <artifactId>frontend-maven-plugin</artifactId>
-       <version>0.0.27</version>
-       <configuration>
-       		<workingDirectory>src/main/webapp</workingDirectory>
-       </configuration>
+			<plugin>
+				<groupId>nl.geodienstencentrum.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
 
-	    <executions>
-		   <execution>
-			    <id>install node and npm</id>
-			    <goals>
-			        <goal>install-node-and-npm</goal>
-			    </goals>
-			    <configuration>
-			        <nodeVersion>v4.6.0</nodeVersion>
-			        <npmVersion>3.10.8</npmVersion>
-			    </configuration>
-			</execution>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>0.0.27</version>
+				
+				<configuration>
+					<workingDirectory>src/main/webapp</workingDirectory>
+				</configuration>
 
-			<execution>
-			    <id>npm install</id>
-			    <goals>
-			        <goal>npm</goal>
-			    </goals>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						
+						<configuration>
+							<nodeVersion>v4.6.0</nodeVersion>
+							<npmVersion>3.10.8</npmVersion>
+						</configuration>
+					</execution>
 
-			    <configuration>
-			        <arguments>install</arguments>
-			    </configuration>
-			</execution>
+					<execution>
+						<id>npm install</id>
+						
+						<goals>
+							<goal>npm</goal>
+						</goals>
 
-		     <execution>
-			    <id>gulp build </id>
-			    <goals>
-			        <goal>gulp </goal>
-			    </goals>
-			    <configuration>
-			        <arguments>deploy-maven</arguments>
-			    </configuration>
-			</execution>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
 
-		   </executions>
-	     </plugin>
+					<execution>
+						<id>gulp build</id>
+						
+						<goals>
+							<goal>gulp</goal>
+						</goals>
+						
+						<configuration>
+							<arguments>tomcat</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
