@@ -28,7 +28,6 @@
 		"gulp-autoprefixer": "3.1.1",
 		"gulp-browserify": "0.5.1",
 		"gulp-concat": "2.6.0",
-		"gulp-ruby-sass": "2.1.0",
 		"gulp-sass": "2.3.2",
 		"gulp-sourcemaps": "1.6.0",
 		"gulp-util": "3.0.7",
@@ -43,15 +42,5 @@
 		"typings": "^1.4.0"
 	},
 
-	"scripts": {
-		"postinstall": "typings install",
-		"tsc": "tsc",
-		"tsc:w": "tsc -w",
-		"typings": "typings",
-
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	
-	"author": "Mame Awa Diop",
-	"license": "ISC"
+	"author": "Mame Awa Diop"
 }

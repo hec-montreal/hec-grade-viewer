@@ -12,7 +12,7 @@ public class CourseImpl implements Course {
 	private String id;
 	private String title;
 	private String description;
-	private String session;
+	private AcademicSession session;
 	private List<Assignment> assignments;
 
 	public CourseImpl(org.sakaiproject.site.api.Site site) {
@@ -21,6 +21,6 @@ public class CourseImpl implements Course {
 		this.id = site.getId();
 		this.title = site.getTitle();
 		this.description = StringUtil.valOrEmptyString(site.getProperties().getProperty("title"));
-		this.session = StringUtil.valOrEmptyString(site.getProperties().getProperty("term"));
+		this.session = new AcademicSessionImpl(StringUtil.valOrEmptyString(site.getProperties().getProperty("term")));
 	}
 }

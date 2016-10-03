@@ -10,7 +10,7 @@ public interface Course {
 
 	public String getDescription();
 
-	public String getSession();
+	public AcademicSession getSession();
 
 	public List<Assignment> getAssignments();
 }

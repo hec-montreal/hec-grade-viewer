@@ -2,7 +2,7 @@
 
 var gulp = require("gulp"),
 	gutil = require("gulp-util"),
-	sass = require("gulp-ruby-sass"),
+	sass = require("gulp-sass"),
 	autoprefixer = require("gulp-autoprefixer"),
 	concat = require("gulp-concat"),
 	sourcemaps = require("gulp-sourcemaps"),
@@ -14,14 +14,16 @@ var gulp = require("gulp"),
 	// Build config
 	config = require("./gulp.config.json");
 
-// Clean dest
+// Clean
 gulp.task("clean:dest", function () {
-	return gulp.src(["./dest/*"]).
-		pipe(vinylPaths(del));
+	return gulp.src("./dest/*")
+		.pipe(vinylPaths(del));
 });
 
-// Copy JS libs
-gulp.task("lib", ["lib:js:rxjs", "lib:js:angular"], function() {
+// Librairies
+gulp.task("lib", ["lib:js", "lib:js:rxjs", "lib:js:angular"]);
+
+gulp.task("lib:js", ["clean:dest"], function() {
 	return gulp.src([
 		"./node_modules/core-js/client/shim.min.js",
 		"./node_modules/zone.js/dist/zone.js",
@@ -31,59 +33,58 @@ gulp.task("lib", ["lib:js:rxjs", "lib:js:angular"], function() {
 		.pipe(gulp.dest("./dest/lib"));
 });
 
-gulp.task("lib:js:rxjs", function () {
+gulp.task("lib:js:rxjs", ["clean:dest"], function () {
 	return gulp.src(["./node_modules/rxjs/**/*.js"])
 		.pipe(gulp.dest("./dest/lib/rxjs"));
 });
 
-gulp.task("lib:js:angular", function() {
+gulp.task("lib:js:angular", ["clean:dest"], function() {
 	return gulp.src(["./node_modules/@angular/**/bundles/**.min.js"])
 		.pipe(gulp.dest("./dest/lib/@angular"));
 });
 
-// Copy JSP
-gulp.task("app", ["app:js", "app:webinf", "app:tools"], function() {
+// Application
+gulp.task("app", ["app:index", "app:js", "app:html", "app:webinf", "app:sakaitools", "app:sass"]);
+
+gulp.task("app:index", ["clean:dest"], function() {
 	return gulp.src("./index.jsp")
 		.pipe(gulp.dest("./dest"));
 });
 
-// App
-gulp.task("app:js", function () {
+gulp.task("app:js", ["clean:dest"], function () {
 	return gulp.src(["./app/*.ts"])
 		.pipe(ts({"experimentalDecorators": true}))
 		.pipe(gulp.dest("./dest/app"));
 });
 
-//Web-Inf
-gulp.task("app:webinf", function() {
+gulp.task("app:html", ["clean:dest"], function () {
+	return gulp.src(["./app/*.html"])
+		.pipe(gulp.dest("./dest/app"));
+});
+
+gulp.task("app:webinf", ["clean:dest"], function() {
 	return gulp.src(["./WEB-INF/*"])
 		.pipe(gulp.dest("./dest/WEB-INF"));
 });
 
-//Sakai Tools
-gulp.task("app:tools", function() {
+gulp.task("app:sakaitools", ["clean:dest"], function() {
 	return gulp.src(["./tools/*"])
 		.pipe(gulp.dest("./dest/tools"));
 });
 
-//Sass
-gulp.task("sass", function() {
-	return sass("./source/scss/*.scss", {
-			sourcemap: true
-	})
-		.on("error", sass.logError)
-		.pipe(autoprefixer({
-			browsers: ["last 2 versions"]
-		}))
+gulp.task("app:sass", ["clean:dest"], function() {
+	return gulp.src("./sass/**/*.scss")
+		.pipe(sass().on("error", sass.logError))
 		.pipe(gulp.dest("./dest/css"));
 });
 
-// Copy to tomcat
-gulp.task("tomcat:copy", function() {
+// Build
+gulp.task("build", ["lib", "app"]);
+
+// Tomcat
+gulp.task("tomcat", ["tomcat:copy"]);
+
+gulp.task("tomcat:copy", ["build"], function() {
 	return gulp.src(["./dest/**/*"])
 		.pipe(gulp.dest(config.tomcatDir));
-});
-
-gulp.task("tomcat", ["clean:dest", "lib", "app", "tomcat:copy"], function() {
-	gutil.log("Source deployed");
 });

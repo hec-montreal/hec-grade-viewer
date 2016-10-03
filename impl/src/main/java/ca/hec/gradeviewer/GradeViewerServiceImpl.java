@@ -17,6 +17,8 @@ import ca.hec.gradeviewer.entity.Course;
 import ca.hec.gradeviewer.entity.CourseImpl;
 import ca.hec.gradeviewer.entity.Grade;
 import ca.hec.gradeviewer.entity.GradeImpl;
+import ca.hec.gradeviewer.entity.AcademicSession;
+import ca.hec.gradeviewer.entity.AcademicSessionImpl;
 import ca.hec.gradeviewer.entity.User;
 import ca.hec.gradeviewer.entity.UserImpl;
 
@@ -27,6 +29,17 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	private SiteService siteService = null;
 
 	private GradebookService gradebookService = null;
+
+	@Override
+	public List<AcademicSession> getSessions() {
+		List<AcademicSession> ret = new ArrayList<>();
+
+		ret.add(new AcademicSessionImpl("H2016"));
+		ret.add(new AcademicSessionImpl("E2016"));
+		ret.add(new AcademicSessionImpl("A2016"));
+
+		return ret;
+	}
 
 	@Override
 	public User getUserByMatricule(String matricule) throws UserNotDefinedException {

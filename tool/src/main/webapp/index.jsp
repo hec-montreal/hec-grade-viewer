@@ -21,9 +21,11 @@
 		<script>
 			System.import('app').catch(function(err){ console.error(err); });
 		</script>
+
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	</head>
 	
-	<body id="body" class="portletBody" >
-		<grade-viewer>Load...</grade-viewer>
+	<body id="body" class="portletBody">
+		<grade-viewer></grade-viewer>
 	</body>
 </html>
