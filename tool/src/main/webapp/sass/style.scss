@@ -1,3 +1,23 @@
-#session {
-	background-image: url("/library/skin/morpheus-default/images/icon-arrow-down.png");
+tbody tr:nth-child(odd) {
+	background-color: #eee;
+}
+
+tbody tr {
+	height: 36px;
+}
+
+.course-list {
+	padding-top: 20px;
+}
+
+.course-list select {
+	background-image: url("../img/icon-arrow-down.png");
+}
+
+.identifier {
+	padding-bottom: 20px;
+}
+
+.bold {
+	font-weight: bold;
 }
