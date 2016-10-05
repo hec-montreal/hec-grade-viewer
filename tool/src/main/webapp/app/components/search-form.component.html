@@ -1,0 +1,12 @@
+<div class="search-form">
+	<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+		<div class="controls">
+			<div class="form-group">
+				<label for="matricule">Matricule*</label>
+				<input class="form-control" type="text" formControlName="matricule">
+			</div>
+		
+			<button [disabled]="!searchForm.controls.matricule.valid || loading" type="submit">{{loading ? 'Chargement...' : 'Afficher'}}</button>
+		</div>
+	</form>
+</div>

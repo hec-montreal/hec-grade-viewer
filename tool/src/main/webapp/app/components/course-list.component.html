@@ -1,0 +1,14 @@
+<div class="course-list">
+	<div class="identifier">
+		<div>
+			<span class="bold">Nom:</span>
+			<span *ngIf="!!user">{{user.fullName}}</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<academic-session-list></academic-session-list>
+	</div>
+
+	<grid></grid>
+</div>

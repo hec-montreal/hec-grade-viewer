@@ -14,9 +14,13 @@ var gulp = require("gulp"),
 	// Build config
 	config = require("./gulp.config.json");
 
+var dest = function (suffix) {
+	return "./dest/" + suffix;
+};
+
 // Clean
 gulp.task("clean:dest", function() {
-	return gulp.src("./dest/*")
+	return gulp.src(dest("*"))
 		.pipe(vinylPaths(del));
 });
 
@@ -31,17 +35,17 @@ gulp.task("lib:js", ["clean:dest"], function() {
 			"./node_modules/systemjs/dist/system.src.js",
 			"./systemjs.config.js"
 		])
-		.pipe(gulp.dest("./dest/lib"));
+		.pipe(gulp.dest(dest("lib")));
 });
 
 gulp.task("lib:js:rxjs", ["clean:dest"], function() {
 	return gulp.src(["./node_modules/rxjs/**/*.js"])
-		.pipe(gulp.dest("./dest/lib/rxjs"));
+		.pipe(gulp.dest(dest("lib/rxjs")));
 });
 
 gulp.task("lib:js:angular", ["clean:dest"], function() {
 	return gulp.src(["./node_modules/@angular/**/bundles/**.min.js"])
-		.pipe(gulp.dest("./dest/lib/@angular"));
+		.pipe(gulp.dest(dest("lib/@angular")));
 });
 
 // Application
@@ -49,41 +53,41 @@ gulp.task("app", ["app:index", "app:js", "app:html", "app:webinf", "app:sakaitoo
 
 gulp.task("app:index", ["clean:dest"], function() {
 	return gulp.src("./index.jsp")
-		.pipe(gulp.dest("./dest"));
+		.pipe(gulp.dest(dest("")));
 });
 
 gulp.task("app:js", ["clean:dest"], function() {
-	return gulp.src(["./app/*.ts"])
+	return gulp.src(["./app/**/*.ts"])
 		.pipe(ts({
 			"experimentalDecorators": true
 		}))
-		.pipe(gulp.dest("./dest/app"));
+		.pipe(gulp.dest(dest("app")));
 });
 
 gulp.task("app:html", ["clean:dest"], function() {
-	return gulp.src(["./app/*.html"])
-		.pipe(gulp.dest("./dest/app"));
+	return gulp.src(["./app/**/*.html"])
+		.pipe(gulp.dest(dest("app")));
 });
 
 gulp.task("app:webinf", ["clean:dest"], function() {
 	return gulp.src(["./WEB-INF/*"])
-		.pipe(gulp.dest("./dest/WEB-INF"));
+		.pipe(gulp.dest(dest("WEB-INF")));
 });
 
 gulp.task("app:sakaitools", ["clean:dest"], function() {
 	return gulp.src(["./tools/*"])
-		.pipe(gulp.dest("./dest/tools"));
+		.pipe(gulp.dest(dest("tools")));
 });
 
 gulp.task("app:sass", ["clean:dest"], function() {
 	return gulp.src("./sass/**/*.scss")
 		.pipe(sass().on("error", sass.logError))
-		.pipe(gulp.dest("./dest/css"));
+		.pipe(gulp.dest(dest("css")));
 });
 
 gulp.task("app:img", ["clean:dest"], function() {
 	return gulp.src("./img/*")
-		.pipe(gulp.dest("./dest/img"));
+		.pipe(gulp.dest(dest("img")));
 });
 
 // Build

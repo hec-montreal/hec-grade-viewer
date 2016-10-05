@@ -1,0 +1,17 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th *ngFor="let title of headerTitles">{{title}}</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr *ngFor="let row of rows">
+			<td *ngFor="let col of row">{{col}}</td>
+		</tr>
+
+		<tr *ngFor="let defaultRow of defaultRows">
+			<td *ngFor="let title of headerTitles"></td>
+		</tr>
+	</tbody>
+</table>

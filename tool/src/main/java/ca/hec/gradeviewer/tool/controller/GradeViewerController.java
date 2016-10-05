@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ca.hec.gradeviewer.GradeViewerService;
 import ca.hec.gradeviewer.entity.User;
 import ca.hec.gradeviewer.tool.entity.GradesResponse;
-import ca.hec.gradeviewer.tool.entity.AcademicSessionsResponse;
 
 @Controller
 public class GradeViewerController {
@@ -23,12 +22,7 @@ public class GradeViewerController {
 	@Autowired
 	private GradeViewerService gradeViewerService;
 
-	@RequestMapping(value = "/sessions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AcademicSessionsResponse getSessions() throws UserNotDefinedException, JsonProcessingException, IdUnusedException {
-		return new AcademicSessionsResponse(gradeViewerService.getSessions());
-	}
-
-	@RequestMapping(value = "/{matricule}/grades", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/grades/{matricule}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody GradesResponse getUserGrades(@PathVariable(value = "matricule") String matricule) throws UserNotDefinedException, JsonProcessingException, IdUnusedException {
 		User user = gradeViewerService.getUserByMatricule(matricule);
 

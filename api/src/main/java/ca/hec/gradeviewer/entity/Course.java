@@ -12,5 +12,7 @@ public interface Course {
 
 	public AcademicSession getSession();
 
+	public String getNumber();
+
 	public List<Assignment> getAssignments();
 }

@@ -7,12 +7,9 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
 import ca.hec.gradeviewer.entity.Course;
-import ca.hec.gradeviewer.entity.AcademicSession;
 import ca.hec.gradeviewer.entity.User;
 
 public interface GradeViewerService {
-
-	public List<AcademicSession> getSessions();
 
 	public User getUserByMatricule(String matricule) throws UserNotDefinedException;
 

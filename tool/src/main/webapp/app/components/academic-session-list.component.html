@@ -1,0 +1,6 @@
+<label for="sessionList">Session</label>
+
+<select class="form-control">
+	<option value="none"></option>
+	<option *ngFor="let session of sessions" value="{{session.code}}">{{session.name}}</option>
+</select>
