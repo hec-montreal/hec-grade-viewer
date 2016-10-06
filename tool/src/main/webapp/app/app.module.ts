@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from '@angular/http';
+import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./components/app.component"
 import { SearchFormComponent } from "./components/search-form.component";
@@ -10,7 +11,7 @@ import { AcademicSessionListComponent } from "./components/academic-session-list
 import { GridComponent } from "./components/grid.component";
 
 @NgModule({
-	imports: [ BrowserModule, ReactiveFormsModule, HttpModule ],
+	imports: [ BrowserModule, ReactiveFormsModule, HttpModule, FormsModule ],
 	declarations: [ AppComponent, SearchFormComponent, CourseListComponent, AcademicSessionListComponent, GridComponent ],
 	bootstrap: [ AppComponent ]
 })

@@ -1,7 +1,13 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th *ngFor="let title of headerTitles">{{title}}</th>
+			<th *ngFor="let col of columns; let i = index" class="{{col.id}}" attr.data-index="{{i}}">
+				<div class="gridHeader" (click)="onSort($event)">
+					{{col.title}}
+					<span *ngIf="currentSortIndex == i && currentSortDirection == 0" class="glyphicon glyphicon-chevron-down"></span>
+					<span *ngIf="currentSortIndex == i && currentSortDirection == 1" class="glyphicon glyphicon-chevron-up"></span>
+				</div>
+			</th>
 		</tr>
 	</thead>
 
@@ -11,7 +17,7 @@
 		</tr>
 
 		<tr *ngFor="let defaultRow of defaultRows">
-			<td *ngFor="let title of headerTitles"></td>
+			<td *ngFor="let col of columns"></td>
 		</tr>
 	</tbody>
 </table>

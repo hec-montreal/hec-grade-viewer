@@ -7,8 +7,8 @@
 	</div>
 
 	<div class="form-group">
-		<academic-session-list></academic-session-list>
+		<academic-session-list (sessionChanged)="onSessionChanged($event)"></academic-session-list>
 	</div>
 
-	<grid></grid>
+	<grid (sortRequested)="onCoursesSort($event)"></grid>
 </div>

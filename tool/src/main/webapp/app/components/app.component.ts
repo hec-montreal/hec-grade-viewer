@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 	onSearchCompleted(uc: UserCourses) {
 		this.userCourses = uc;
 		this.courseList.setUser(uc.user);
+		this.courseList.setCourses(uc.courses);
 		this.courseList.setSessions(uc.getSessions());
 	}
 }

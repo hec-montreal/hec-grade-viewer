@@ -15,7 +15,7 @@ tbody tr {
 }
 
 .course-list {
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 	padding: 5px;
 	padding-top: 20px;
 	margin-top: 10px;
@@ -31,4 +31,17 @@ tbody tr {
 
 .bold {
 	font-weight: bold;
+}
+
+.gridHeader {
+	color: #276488;
+	cursor: pointer;
+}
+
+th.session {
+	width: 15%;
+}
+
+th.courseNumber {
+	width: 30%;
 }
