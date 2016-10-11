@@ -61,6 +61,8 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 				assignment.setGrade(grade);
 
 				course.getAssignments().add(assignment);
+
+				course.setCourseGrade(gradebookService.getCourseGradeForStudent(sakaiSite.getId(), user.getId()));
 			}
 		}
 
