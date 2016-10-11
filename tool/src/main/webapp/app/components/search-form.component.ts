@@ -8,7 +8,7 @@ import { GradesService } from "./../grades.service";
 	moduleId: module.id,
 	selector: "search-form",
 	templateUrl: "./search-form.component.html",
-	providers: [ GradesService ]
+	providers: [GradesService]
 })
 export class SearchFormComponent implements OnInit {
 	@Output() searchCompleted: EventEmitter<any>;
@@ -18,12 +18,12 @@ export class SearchFormComponent implements OnInit {
 
 	searchForm: FormGroup;
 
-	loading:boolean;
+	loading: boolean;
 
-	constructor(@Inject(FormBuilder) formBuilder: FormBuilder, @Inject(GradesService) gradesService: GradesService) {
+	constructor( @Inject(FormBuilder) formBuilder: FormBuilder, @Inject(GradesService) gradesService: GradesService) {
 		this.formBuilder = formBuilder;
 		this.gradesService = gradesService;
-		
+
 		this.searchCompleted = new EventEmitter();
 
 		this.loading = false;
@@ -42,8 +42,10 @@ export class SearchFormComponent implements OnInit {
 			this.gradesService.getStudentCourses(this.searchForm.controls["matricule"].value).subscribe(
 				(uc: UserCourses) => {
 					this.loading = false;
-					this.searchCompleted.emit(uc)
-			});
+					this.searchCompleted.emit({
+						userCourses: uc
+					});
+				});
 		}
 	}
 }

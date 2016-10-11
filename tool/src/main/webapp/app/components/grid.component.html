@@ -12,11 +12,11 @@
 	</thead>
 
 	<tbody>
-		<tr *ngFor="let row of rows">
-			<td *ngFor="let col of row">{{col}}</td>
+		<tr *ngFor="let row of rows" class="interactive" (click)="onRowClick($event)" attr.data-id="{{row.id}}">
+			<td *ngFor="let col of columns; let i = index" class="{{col.id}}">{{row.values[i]}}</td>
 		</tr>
 
-		<tr *ngFor="let defaultRow of defaultRows">
+		<tr *ngFor="let defaultRow of defaultRows" class="defaultRow">
 			<td *ngFor="let col of columns"></td>
 		</tr>
 	</tbody>

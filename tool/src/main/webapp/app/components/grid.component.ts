@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 
 import { GridColumn } from "./grid-column";
+import { GridRow } from "./grid-row";
 
 @Component({
 	moduleId: module.id,
@@ -9,18 +10,20 @@ import { GridColumn } from "./grid-column";
 })
 export class GridComponent {
 	@Output() sortRequested: EventEmitter<any>;
+	@Output() rowSelected: EventEmitter<any>;
 
 	defaultRowCount: number;
 	defaultRows: number[];
 
 	columns: GridColumn[];
+	rows: GridRow[];
 
-	rows: string[][];
 	currentSortIndex: number;
 	currentSortDirection: number; // 0 down, 1 up
 
 	constructor() {
 		this.sortRequested = new EventEmitter();
+		this.rowSelected = new EventEmitter();
 
 		this.rows = [];
 		this.currentSortIndex = 0;
@@ -35,7 +38,7 @@ export class GridComponent {
 		this.defaultRows = Array(this.defaultRowCount - this.rows.length);
 	}
 
-	setRows(rows: string[][]) {
+	setRows(rows: GridRow[]) {
 		this.rows = rows;
 		this.updateDefaultRows();
 	}
@@ -68,6 +71,17 @@ export class GridComponent {
 			this.sortRequested.emit({
 				index: this.currentSortIndex,
 				direction: this.currentSortDirection
+			});
+		}
+	}
+
+	onRowClick(event) {
+		let target = event.target || event.srcElement || event.currentTarget;
+		let tr = target.parentNode;
+
+		if (tr && tr.attributes && tr.attributes["data-id"]) {
+			this.rowSelected.emit({
+				rowId: tr.attributes["data-id"].value
 			});
 		}
 	}

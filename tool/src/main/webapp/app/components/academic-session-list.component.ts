@@ -18,7 +18,7 @@ export class AcademicSessionListComponent implements OnInit {
 	sessions: AcademicSession[];
 	currentSessionStr: string;
 
-	constructor(@Inject(FormBuilder) formBuilder: FormBuilder) {
+	constructor( @Inject(FormBuilder) formBuilder: FormBuilder) {
 		this.formBuilder = formBuilder;
 
 		this.sessionChanged = new EventEmitter();
@@ -34,23 +34,29 @@ export class AcademicSessionListComponent implements OnInit {
 		this.sessions = sessions;
 		this.form.controls["sessionList"].updateValueAndValidity("none");
 
-		this.sessionChanged.emit(null);
+		this.sessionChanged.emit({
+			session: null
+		});
 	}
 
 	onSessionChanged(event) {
-		let emitted:boolean = false;
+		let emitted: boolean = false;
 		let code = event.target.value;
 
 		for (let session of this.sessions) {
 			if (session.code === code) {
-				this.sessionChanged.emit(session);
+				this.sessionChanged.emit({
+					session: session
+				});
 
 				emitted = true;
 			}
 		}
 
-		if(!emitted) {
-			this.sessionChanged.emit(null);
+		if (!emitted) {
+			this.sessionChanged.emit({
+				session: null
+			});
 		}
 	}
 }

@@ -5,15 +5,21 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" [hidden]="currentView !== 'courseList'">
 		<div class="col-xs-12 col-md-4">
 			<search-form (searchCompleted)="onSearchCompleted($event)"></search-form>
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" [hidden]="currentView !== 'courseList'">
 		<div class="col-xs-12 col-md-8">
-			<course-list></course-list>
+			<course-list (courseSelected)="onCourseSelected($event)"></course-list>
+		</div>
+	</div>
+
+	<div class="row" [hidden]="currentView !== 'courseResults'">
+		<div class="col-xs-12 col-md-8">
+			<course-results (backRequested)="onCourseResultsBackRequested($event)"></course-results>
 		</div>
 	</div>
 </div>

@@ -8,4 +8,17 @@ export class Course {
 	session: AcademicSession;
 	number: string;
 	assignments: Assignment[];
+
+	constructor(json: JSON) {
+		this.id = json["id"];
+		this.title = json["title"];
+		this.description = json["description"];
+		this.session = new AcademicSession(json["session"]);
+		this.number = json["number"];
+		this.assignments = [];
+
+		for (var i = 0; i < json["assignments"].length; i++) {
+			this.assignments.push(new Assignment(json["assignments"][i]));
+		}
+	}
 }

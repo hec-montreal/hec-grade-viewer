@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Inject, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, Inject, ViewChild, Output, EventEmitter } from "@angular/core";
 
 import { Course } from "./../entities/course";
 import { User } from "./../entities/user";
@@ -6,6 +6,7 @@ import { AcademicSession } from "./../entities/academic-session";
 import { AcademicSessionListComponent } from "./academic-session-list.component";
 import { GridComponent } from "./grid.component";
 import { GridColumn } from "./grid-column";
+import { GridRow } from "./grid-row";
 
 @Component({
 	moduleId: module.id,
@@ -13,6 +14,8 @@ import { GridColumn } from "./grid-column";
 	templateUrl: "./course-list.component.html"
 })
 export class CourseListComponent implements OnInit {
+	@Output() courseSelected: EventEmitter<any>;
+
 	@ViewChild(AcademicSessionListComponent) sessionList: AcademicSessionListComponent;
 	@ViewChild(GridComponent) grid: GridComponent;
 
@@ -21,14 +24,15 @@ export class CourseListComponent implements OnInit {
 	currentSession: AcademicSession;
 
 	constructor() {
-
+		this.courseSelected = new EventEmitter<any>();
 	}
 
 	ngOnInit() {
 		this.grid.columns = [
 			new GridColumn("Session", "session"),
 			new GridColumn("Numéro de cours", "courseNumber"),
-			new GridColumn("Titre", "title")
+			new GridColumn("Titre", "title"),
+			new GridColumn("Résultats", "results")
 		];
 
 		this.currentSession = null;
@@ -52,18 +56,43 @@ export class CourseListComponent implements OnInit {
 		this.grid.setRows(this.makeGridArray(event.index, event.direction));
 	}
 
-	onSessionChanged(session: AcademicSession) {
-		this.currentSession = session;
+	onSessionChanged(event) {
+		this.currentSession = event.session;
 
 		this.grid.setRows(this.makeGridArray(this.grid.currentSortIndex, this.grid.currentSortDirection));
 	}
 
-	makeGridArray(sortIndex: number, sortDirection: number): string[][] {
-		this.courses = this.courses;
+	onCourseSelected(event) {
+		let courseNumber: string = event.rowId;
 
-		let rows = [];
+		for (let course of this.courses) {
+			if (course.number === courseNumber) {
+				this.courseSelected.emit({
+					course: course
+				});
+			}
+		}
+	}
 
-		console.log("Make grid array with sindex = " + sortIndex + ", sdir = " + sortDirection + ", currentSession = " + (this.currentSession == null ? "null" : this.currentSession.code));
+	makeGridArray(sortIndex: number, sortDirection: number): GridRow[] {
+		this.courses = this.courses.sort((a: Course, b: Course) => {
+			let ca: Course = sortDirection === 0 ? a : b;
+			let cb: Course = sortDirection === 0 ? b : a;
+
+			if (sortIndex === 0) { // Session
+				return ca.session.compareTo(cb.session);
+			} else if (sortIndex === 1) { // Numéro de cours
+				return ca.number.localeCompare(cb.number);
+			} else if (sortIndex === 2) { // Titre
+				return ca.description.localeCompare(cb.description);
+			} else if (sortIndex === 3) { // Nombre de résultats
+				return ca.assignments.length - cb.assignments.length;
+			}
+
+			return 0;
+		});
+
+		let rows: GridRow[] = [];
 
 		for (let course of this.courses) {
 			let go: boolean = true;
@@ -75,17 +104,9 @@ export class CourseListComponent implements OnInit {
 			}
 
 			if (go) {
-				rows.push([course.session.name, course.number, course.description]);
+				rows.push(new GridRow(course.number, [course.session.name, course.number, course.description, course.assignments.length.toString()]));
 			}
 		}
-
-		rows = rows.sort((a: string[], b: string[]) => {
-			if (sortDirection === 0) {
-				return a[sortIndex].localeCompare(b[sortIndex]);
-			} else {
-				return b[sortIndex].localeCompare(a[sortIndex]);
-			}
-		});
 
 		return rows;
 	}

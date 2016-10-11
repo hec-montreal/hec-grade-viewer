@@ -10,5 +10,5 @@
 		<academic-session-list (sessionChanged)="onSessionChanged($event)"></academic-session-list>
 	</div>
 
-	<grid (sortRequested)="onCoursesSort($event)"></grid>
+	<grid (sortRequested)="onCoursesSort($event)" (rowSelected)="onCourseSelected($event)"></grid>
 </div>

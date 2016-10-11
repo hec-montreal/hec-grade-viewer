@@ -1,0 +1,22 @@
+<div>
+	<button type="button" (click)="onBackClicked($event)">Retour à la liste des cours</button>
+</div>
+
+<div class="course-results">
+	<div class="identifier">
+		<div>
+			<span class="bold">Matricule:</span>
+			<span *ngIf="!!user">{{user.matricule}}</span>
+		</div>
+
+		<div>
+			<span class="bold">Nom:</span>
+			<span *ngIf="!!user">{{user.fullName}}</span>
+		</div>
+
+		<div>
+			<span class="bold">Cours:</span>
+			<span *ngIf="!!course">{{course.number}}&nbsp;-&nbsp;{{course.description}}</span>
+		</div>
+	</div>
+</div>

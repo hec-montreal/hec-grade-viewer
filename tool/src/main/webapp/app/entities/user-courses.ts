@@ -6,9 +6,13 @@ export class UserCourses {
 	user: User;
 	courses: Course[];
 
-	constructor(json: any) {
-		this.user = json.user;
-		this.courses = json.courses;
+	constructor(json: JSON) {
+		this.user = new User(json["user"]);
+		this.courses = [];
+
+		for (var i = 0; i < json["courses"].length; i++) {
+			this.courses.push(new Course(json["courses"][i]));
+		}
 	}
 
 	getSessions(): AcademicSession[] {

@@ -1,3 +1,13 @@
+/** Base **/
+.bold {
+	font-weight: bold;
+}
+
+select {
+	background-image: url("../img/icon-arrow-down.png");
+}
+
+/** Grid Component **/
 tbody tr:nth-child(odd) {
 	background-color: #eee;
 }
@@ -6,6 +16,19 @@ tbody tr {
 	height: 36px;
 }
 
+tbody tr.interactive:hover {
+	background-color: #777;
+	color: #fff;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.gridHeader {
+	color: #276488;
+	cursor: pointer;
+}
+
+/** Layout **/
 .controls .form-group {
 	margin-bottom: 5px;
 }
@@ -21,21 +44,15 @@ tbody tr {
 	margin-top: 10px;
 }
 
-.course-list select {
-	background-image: url("../img/icon-arrow-down.png");
+.course-results {
+	border: 1px solid #ddd;
+	padding: 5px;
+	padding-top: 20px;
+	margin-top: 10px;
 }
 
-.identifier {
+.identifier div {
 	padding-bottom: 10px;
-}
-
-.bold {
-	font-weight: bold;
-}
-
-.gridHeader {
-	color: #276488;
-	cursor: pointer;
 }
 
 th.session {
@@ -44,4 +61,12 @@ th.session {
 
 th.courseNumber {
 	width: 30%;
+}
+
+th.title {
+	width: 30%;
+}
+
+th.results, td.results {
+	text-align: right;
 }
