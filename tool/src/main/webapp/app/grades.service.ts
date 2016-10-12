@@ -18,8 +18,7 @@ export class GradesService {
 
 	getStudentCourses(matricule: String): Observable<UserCourses> {
 		return this.http.get(this.baseSvcUrl + "/grades/" + matricule)
-					    .map((res: Response) => this.makeStudentCourses(res))
-					    .catch((error: any) => Observable.throw(error.json().error || "Server error"));
+					    .map((res: Response) => this.makeStudentCourses(res));
 	}
 
 	private makeStudentCourses(res: Response) : UserCourses {

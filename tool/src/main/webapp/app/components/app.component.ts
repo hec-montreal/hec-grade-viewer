@@ -33,7 +33,10 @@ export class AppComponent {
 
 	onCourseSelected(event) {
 		this.courseResults.user = this.userCourses.user;
-		this.courseResults.course = event.course;
+		this.courseResults.courses = this.userCourses.courses;
+		this.courseResults.setCourseIndex(event.index);
+
+		console.log(this.courseResults.courses[event.index]);
 
 		this.currentView = "courseResults";
 	}

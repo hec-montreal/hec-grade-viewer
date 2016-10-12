@@ -11,6 +11,10 @@ import ca.hec.gradeviewer.entity.User;
 
 public interface GradeViewerService {
 
+	public final static String FUNCTION_GRADE_VIEWER_READ = "grade-viewer.perm.read";
+
+	public void init();
+
 	public User getUserByMatricule(String matricule) throws UserNotDefinedException;
 
 	public Site getSakaiSiteById(String id) throws IdUnusedException;

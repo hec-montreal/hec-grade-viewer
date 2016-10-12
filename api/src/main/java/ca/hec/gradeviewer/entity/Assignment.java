@@ -1,14 +1,12 @@
 package ca.hec.gradeviewer.entity;
 
-import java.util.Date;
-
 public interface Assignment {
 
 	public String getId();
 
 	public String getName();
 
-	public Date getDate();
+	public long getDate();
 
 	public String getCategoryId();
 

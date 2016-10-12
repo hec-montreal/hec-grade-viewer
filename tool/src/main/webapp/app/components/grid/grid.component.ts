@@ -18,6 +18,8 @@ export class GridComponent {
 	columns: GridColumn[];
 	rows: GridRow[];
 
+	interactive: boolean;
+
 	currentSortIndex: number;
 	currentSortDirection: number; // 0 down, 1 up
 
@@ -26,6 +28,9 @@ export class GridComponent {
 		this.rowSelected = new EventEmitter();
 
 		this.rows = [];
+
+		this.interactive = true;
+
 		this.currentSortIndex = 0;
 		this.currentSortDirection = 0;
 

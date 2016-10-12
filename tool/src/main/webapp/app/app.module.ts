@@ -9,7 +9,7 @@ import { SearchFormComponent } from "./components/search-form.component";
 import { CourseListComponent } from "./components/course-list.component";
 import { AcademicSessionListComponent } from "./components/academic-session-list.component";
 import { CourseResultsComponent } from "./components/course-results.component";
-import { GridComponent } from "./components/grid.component";
+import { GridComponent } from "./components/grid/grid.component";
 
 @NgModule({
 	imports: [ BrowserModule, ReactiveFormsModule, HttpModule, FormsModule ],

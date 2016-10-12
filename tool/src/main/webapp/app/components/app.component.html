@@ -12,13 +12,13 @@
 	</div>
 
 	<div class="row" [hidden]="currentView !== 'courseList'">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-12 col-md-10">
 			<course-list (courseSelected)="onCourseSelected($event)"></course-list>
 		</div>
 	</div>
 
 	<div class="row" [hidden]="currentView !== 'courseResults'">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-12 col-md-10">
 			<course-results (backRequested)="onCourseResultsBackRequested($event)"></course-results>
 		</div>
 	</div>

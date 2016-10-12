@@ -4,9 +4,9 @@ import { Course } from "./../entities/course";
 import { User } from "./../entities/user";
 import { AcademicSession } from "./../entities/academic-session";
 import { AcademicSessionListComponent } from "./academic-session-list.component";
-import { GridComponent } from "./grid.component";
-import { GridColumn } from "./grid-column";
-import { GridRow } from "./grid-row";
+import { GridComponent } from "./grid/grid.component";
+import { GridColumn } from "./grid/grid-column";
+import { GridRow } from "./grid/grid-row";
 
 @Component({
 	moduleId: module.id,
@@ -32,7 +32,7 @@ export class CourseListComponent implements OnInit {
 			new GridColumn("Session", "session"),
 			new GridColumn("Numéro de cours", "courseNumber"),
 			new GridColumn("Titre", "title"),
-			new GridColumn("Résultats", "results")
+			new GridColumn("Résultat intermédiaire", "result")
 		];
 
 		this.currentSession = null;
@@ -49,32 +49,32 @@ export class CourseListComponent implements OnInit {
 	setCourses(courses: Course[]) {
 		this.courses = courses;
 
-		this.grid.setRows(this.makeGridArray(this.grid.currentSortIndex, this.grid.currentSortDirection));
+		this.grid.setRows(this.makeGrid(this.grid.currentSortIndex, this.grid.currentSortDirection));
 	}
 
 	onCoursesSort(event) {
-		this.grid.setRows(this.makeGridArray(event.index, event.direction));
+		this.grid.setRows(this.makeGrid(event.index, event.direction));
 	}
 
 	onSessionChanged(event) {
 		this.currentSession = event.session;
 
-		this.grid.setRows(this.makeGridArray(this.grid.currentSortIndex, this.grid.currentSortDirection));
+		this.grid.setRows(this.makeGrid(this.grid.currentSortIndex, this.grid.currentSortDirection));
 	}
 
 	onCourseSelected(event) {
 		let courseNumber: string = event.rowId;
 
-		for (let course of this.courses) {
-			if (course.number === courseNumber) {
+		for(let i = 0; i < this.courses.length; i++) {
+			if(this.courses[i].number === courseNumber) {
 				this.courseSelected.emit({
-					course: course
+					index: i
 				});
 			}
 		}
 	}
 
-	makeGridArray(sortIndex: number, sortDirection: number): GridRow[] {
+	makeGrid(sortIndex: number, sortDirection: number): GridRow[] {
 		this.courses = this.courses.sort((a: Course, b: Course) => {
 			let ca: Course = sortDirection === 0 ? a : b;
 			let cb: Course = sortDirection === 0 ? b : a;
@@ -85,8 +85,8 @@ export class CourseListComponent implements OnInit {
 				return ca.number.localeCompare(cb.number);
 			} else if (sortIndex === 2) { // Titre
 				return ca.description.localeCompare(cb.description);
-			} else if (sortIndex === 3) { // Nombre de résultats
-				return ca.assignments.length - cb.assignments.length;
+			} else if (sortIndex === 3) { // Résultats
+				return ca.courseGrade.compareTo(cb.courseGrade);
 			}
 
 			return 0;
@@ -94,20 +94,28 @@ export class CourseListComponent implements OnInit {
 
 		let rows: GridRow[] = [];
 
-		for (let course of this.courses) {
-			let go: boolean = true;
-
-			if (this.currentSession != null) {
-				if (course.session == null || course.session.code == null || course.session.code.length == 0 || course.session.code !== this.currentSession.code) {
-					go = false;
-				}
-			}
-
-			if (go) {
-				rows.push(new GridRow(course.number, [course.session.name, course.number, course.description, course.assignments.length.toString()]));
-			}
+		for (let course of this.filterCourses()) {
+			rows.push(new GridRow(course.number, [course.session.name, course.number, course.description, course.courseGrade.formattedValue]));
 		}
 
 		return rows;
+	}
+
+	filterCourses(): Course[] {
+		let ret: Course[] = [];
+
+		let filter = (course: Course, currentSession: AcademicSession): boolean => {
+			return currentSession === null ? true : (course.session != null && course.session.code === currentSession.code);
+		};
+
+		for (let course of this.courses) {
+			if (!filter(course, this.currentSession)) {
+				continue;
+			}
+
+			ret.push(course);
+		}
+
+		return ret;
 	}
 }

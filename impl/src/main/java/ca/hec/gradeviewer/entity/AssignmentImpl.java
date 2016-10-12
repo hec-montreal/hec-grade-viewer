@@ -11,7 +11,7 @@ public class AssignmentImpl implements Assignment {
 
 	private String id;
 	private String name;
-	private Date date;
+	private long date;
 	private String categoryId;
 	private String categoryName;
 	private double points;
@@ -23,13 +23,17 @@ public class AssignmentImpl implements Assignment {
 		this.id = assignment.getId().toString();
 		this.name = assignment.getName();
 		this.points = assignment.getPoints();
-		this.date = assignment.getDueDate();
+		this.date = assignment.getDueDate() != null ? assignment.getDueDate().getTime() : 0;
 		this.categoryId = assignment.getCategoryId() == null ? "" : assignment.getCategoryId().toString();
-		this.categoryName = assignment.getCategoryName();
+		this.categoryName = assignment.getCategoryName() == null ? "" : assignment.getCategoryName();
 	}
 
 	@Override
 	public String getFormattedDate() {
-		return DateUtil.formatDate(getDate());
+		if (date == 0) {
+			return "";
+		}
+
+		return DateUtil.formatDate(new Date(date));
 	}
 }

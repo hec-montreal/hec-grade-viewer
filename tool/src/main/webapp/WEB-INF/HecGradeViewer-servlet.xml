@@ -17,9 +17,10 @@
 		<property name="suffix" value="" />
 	</bean>
 	
-	<bean id="ca.hec.gradeviewer.api.GradeViewerService" class="ca.hec.gradeviewer.GradeViewerServiceImpl">
+	<bean id="ca.hec.gradeviewer.api.GradeViewerService" class="ca.hec.gradeviewer.GradeViewerServiceImpl" init-method="init">
 		<property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
 		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
 		<property name="gradebookService" ref="org.sakaiproject.service.gradebook.GradebookService" />
+		<property name="functionManager" ref="org.sakaiproject.authz.api.FunctionManager" />
 	</bean>
 </beans>

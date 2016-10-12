@@ -4,10 +4,19 @@
 }
 
 select {
-	background-image: url("../img/icon-arrow-down.png");
+	background-image: url("../img/icon-arrow-down.png")!important;
+}
+
+.action {
+	cursor: pointer;
+	color: #276488;
 }
 
 /** Grid Component **/
+table tbody {
+	border: 1px solid #ddd;
+}
+
 tbody tr:nth-child(odd) {
 	background-color: #eee;
 }
@@ -29,44 +38,31 @@ tbody tr.interactive:hover {
 }
 
 /** Layout **/
-.controls .form-group {
-	margin-bottom: 5px;
-}
-
 .controls button {
 	width: 200px;
 }
 
+.identifier {
+	font-size: 1.2em;
+}
+
+label {
+	font-size: 1.2em;
+}
+
 .course-list {
-	border: 1px solid #ddd;
-	padding: 5px;
-	padding-top: 20px;
-	margin-top: 10px;
+	th.session { width: 15%;}
+	th.courseNumber { width: 30%; }
+	th.title { width: 30%; }
+	th.result, td.result { text-align: right; }	
 }
 
 .course-results {
-	border: 1px solid #ddd;
-	padding: 5px;
-	padding-top: 20px;
-	margin-top: 10px;
-}
-
-.identifier div {
-	padding-bottom: 10px;
-}
-
-th.session {
-	width: 15%;
-}
-
-th.courseNumber {
-	width: 30%;
-}
-
-th.title {
-	width: 30%;
-}
-
-th.results, td.results {
-	text-align: right;
+	th.date { width: 15%; }
+	th.title { width: 20%; }
+	th.category { width: 15%; }
+	th.gradeOn, td.gradeOn { width: 10%; text-align: right; }
+	th.result, td.result { width: 10%; text-align: right; }
+	th.published, td.published { width: 10%; text-align: center; }
+	tr[data-id='total'] { font-weight: bold; }
 }

@@ -3,7 +3,7 @@ import { Grade } from "./grade";
 export class Assignment {
 	id: string;
 	name: string;
-	date: string;
+	date: number;
 	formattedDate: string;
 	categoryId: string;
 	categoryName: string;

@@ -12,7 +12,7 @@
 	</thead>
 
 	<tbody>
-		<tr *ngFor="let row of rows" class="interactive" (click)="onRowClick($event)" attr.data-id="{{row.id}}">
+		<tr *ngFor="let row of rows" class="{{interactive ? 'interactive' : ''}}" (click)="onRowClick($event)" attr.data-id="{{row.id}}">
 			<td *ngFor="let col of columns; let i = index" class="{{col.id}}">{{row.values[i]}}</td>
 		</tr>
 

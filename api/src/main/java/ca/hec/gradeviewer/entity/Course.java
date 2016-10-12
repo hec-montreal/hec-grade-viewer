@@ -2,8 +2,6 @@ package ca.hec.gradeviewer.entity;
 
 import java.util.List;
 
-import org.sakaiproject.service.gradebook.shared.CourseGrade;
-
 public interface Course {
 
 	public String getId();
@@ -18,7 +16,7 @@ public interface Course {
 
 	public List<Assignment> getAssignments();
 
-	public String getCourseGrade();
+	public Grade getCourseGrade();
 
-	void setCourseGrade(CourseGrade courseGrade);
+	void setCourseGrade(org.sakaiproject.service.gradebook.shared.CourseGrade courseGrade);
 }

@@ -17,7 +17,7 @@ public class CourseImpl implements Course {
 	private AcademicSession session;
 	private String number;
 	private List<Assignment> assignments;
-	private String courseGrade;
+	private Grade courseGrade;
 
 	public CourseImpl(org.sakaiproject.site.api.Site site) {
 		this.assignments = new ArrayList<>();
@@ -30,8 +30,18 @@ public class CourseImpl implements Course {
 	}
 
 	public void setCourseGrade(CourseGrade courseGrade) {
-		if (courseGrade != null && courseGrade.getMappedGrade() != null && courseGrade.getCalculatedGrade() != null) {
-			this.courseGrade = courseGrade.getMappedGrade() + " (" + courseGrade.getCalculatedGrade() + ")";
+		String formatted = "";
+		String mapped = courseGrade.getMappedGrade();
+		String value = courseGrade.getCalculatedGrade();
+
+		if (mapped != null && mapped.length() > 0) {
+			formatted += mapped;
 		}
+
+		if (value != null && value.length() > 0) {
+			formatted += " (" + value + ")";
+		}
+
+		this.courseGrade = new GradeImpl(courseGrade.getCalculatedGrade(), formatted, "", true);
 	}
 }

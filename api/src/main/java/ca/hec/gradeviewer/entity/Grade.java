@@ -2,7 +2,7 @@ package ca.hec.gradeviewer.entity;
 
 public interface Grade {
 
-	public String getValue();
+	public Double getValue();
 
 	public String getFormattedValue();
 
