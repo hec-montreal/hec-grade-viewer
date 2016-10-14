@@ -22,5 +22,6 @@
 		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
 		<property name="gradebookService" ref="org.sakaiproject.service.gradebook.GradebookService" />
 		<property name="functionManager" ref="org.sakaiproject.authz.api.FunctionManager" />
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
 	</bean>
 </beans>

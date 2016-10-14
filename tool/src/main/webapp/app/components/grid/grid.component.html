@@ -1,6 +1,6 @@
 <table class="table">
 	<thead>
-		<tr>
+		<tr class="no-select">
 			<th *ngFor="let col of columns; let i = index" class="{{col.id}}" attr.data-index="{{i}}">
 				<div class="gridHeader" (click)="onSort($event)">
 					{{col.title}}

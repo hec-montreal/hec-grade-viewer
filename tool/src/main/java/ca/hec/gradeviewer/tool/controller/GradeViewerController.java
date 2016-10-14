@@ -24,6 +24,10 @@ public class GradeViewerController {
 
 	@RequestMapping(value = "/grades/{matricule}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody GradesResponse getUserGrades(@PathVariable(value = "matricule") String matricule) throws UserNotDefinedException, JsonProcessingException, IdUnusedException {
+		if (!gradeViewerService.isUserAllowed()) {
+			throw new SecurityException("User is not allowed");
+		}
+
 		User user = gradeViewerService.getUserByMatricule(matricule);
 
 		GradesResponse ret = new GradesResponse();

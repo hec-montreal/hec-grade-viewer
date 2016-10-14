@@ -10,7 +10,7 @@
 			<span *ngIf="!!user">{{user.fullName}}</span>
 		</div>
 
-		<div>
+		<div class="no-select">
 			<span class="bold">Cours:</span>
 			<span *ngIf="!!courses && courses.length > 0"><span class="glyphicon glyphicon-chevron-left action" (click)="onPreviousCourse()"></span>{{courses[courseIndex].number}}&nbsp;-&nbsp;{{courses[courseIndex].description}}<span class="glyphicon glyphicon-chevron-right action" (click)="onNextCourse()"></span></span>
 		</div>

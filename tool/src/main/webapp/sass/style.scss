@@ -12,6 +12,14 @@ select {
 	color: #276488;
 }
 
+.no-select {
+   user-select: none;
+   -o-user-select:none;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+}
+
 /** Grid Component **/
 table tbody {
 	border: 1px solid #ddd;
@@ -42,19 +50,15 @@ tbody tr.interactive:hover {
 	width: 200px;
 }
 
-.identifier {
-	font-size: 1.2em;
-}
-
-label {
-	font-size: 1.2em;
+.identifier, label {
+	font-size: 1.1em;
 }
 
 .course-list {
 	th.session { width: 15%;}
 	th.courseNumber { width: 30%; }
 	th.title { width: 30%; }
-	th.result, td.result { text-align: right; }	
+	th.result, td.result { text-align: right; }
 }
 
 .course-results {
@@ -64,5 +68,4 @@ label {
 	th.gradeOn, td.gradeOn { width: 10%; text-align: right; }
 	th.result, td.result { width: 10%; text-align: right; }
 	th.published, td.published { width: 10%; text-align: center; }
-	tr[data-id='total'] { font-weight: bold; }
 }

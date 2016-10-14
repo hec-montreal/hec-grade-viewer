@@ -20,4 +20,6 @@ public interface GradeViewerService {
 	public Site getSakaiSiteById(String id) throws IdUnusedException;
 
 	public List<Course> getUserCourses(User user);
+
+	public boolean isUserAllowed();
 }

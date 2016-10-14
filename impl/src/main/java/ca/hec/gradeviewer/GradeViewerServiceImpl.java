@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sakaiproject.authz.api.FunctionManager;
+import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.service.gradebook.shared.CommentDefinition;
 import org.sakaiproject.service.gradebook.shared.GradebookService;
@@ -30,6 +31,8 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	private GradebookService gradebookService = null;
 
 	private FunctionManager functionManager = null;
+
+	private SecurityService securityService = null;
 
 	@Override
 	public void init() {
@@ -90,6 +93,17 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 		return ret;
 	}
 
+	@Override
+	public boolean isUserAllowed() {
+		org.sakaiproject.user.api.User current = userDirectoryService.getCurrentUser();
+
+		if (current == null) {
+			return false;
+		}
+
+		return securityService.unlock(current.getId(), FUNCTION_GRADE_VIEWER_READ);
+	}
+
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
 		this.userDirectoryService = userDirectoryService;
 	}
@@ -104,5 +118,9 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 
 	public void setFunctionManager(FunctionManager functionManager) {
 		this.functionManager = functionManager;
+	}
+
+	public void setSecurityService(SecurityService securityService) {
+		this.securityService = securityService;
 	}
 }
