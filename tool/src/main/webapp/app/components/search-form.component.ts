@@ -11,10 +11,13 @@ import { GradesService } from "./../grades.service";
 	providers: [GradesService]
 })
 export class SearchFormComponent implements OnInit {
+	@Output() searchStarted: EventEmitter<any>;
 	@Output() searchCompleted: EventEmitter<any>;
 
 	formBuilder: FormBuilder;
 	gradesService: GradesService;
+
+	errorMessage: string;
 
 	searchForm: FormGroup;
 
@@ -24,6 +27,9 @@ export class SearchFormComponent implements OnInit {
 		this.formBuilder = formBuilder;
 		this.gradesService = gradesService;
 
+		this.errorMessage = "";
+
+		this.searchStarted = new EventEmitter();
 		this.searchCompleted = new EventEmitter();
 
 		this.loading = false;
@@ -37,15 +43,36 @@ export class SearchFormComponent implements OnInit {
 
 	onSubmit() {
 		if (this.searchForm.valid) {
+			this.searchStarted.emit({});
+
 			this.loading = true;
+			this.errorMessage = "";
 
 			this.gradesService.getStudentCourses(this.searchForm.controls["matricule"].value).subscribe(
-				(uc: UserCourses) => {
-					this.loading = false;
-					this.searchCompleted.emit({
-						userCourses: uc
-					});
-				});
+				(uc: UserCourses) => { this.completeSearch(uc); },
+				error => { this.handleError(error); });
 		}
+	}
+
+	completeSearch(uc: UserCourses) {
+		this.loading = false;
+
+		if (uc.errorCode !== UserCourses.OK) {
+			this.showError("L'usager n'existe pas");
+		} else {
+			this.searchCompleted.emit({
+				userCourses: uc
+			});
+		}
+	}
+
+	handleError(error) {
+		this.loading = false;
+
+		this.showError(error);
+	}
+
+	showError(msg: string) {
+		this.errorMessage = msg;
 	}
 }

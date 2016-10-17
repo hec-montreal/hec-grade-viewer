@@ -30,18 +30,6 @@ public class CourseImpl implements Course {
 	}
 
 	public void setCourseGrade(CourseGrade courseGrade) {
-		String formatted = "";
-		String mapped = courseGrade.getMappedGrade();
-		String value = courseGrade.getCalculatedGrade();
-
-		if (mapped != null && mapped.length() > 0) {
-			formatted += mapped;
-		}
-
-		if (value != null && value.length() > 0) {
-			formatted += " (" + value + ")";
-		}
-
-		this.courseGrade = new GradeImpl(courseGrade.getCalculatedGrade(), formatted, "", true);
+		this.courseGrade = new GradeImpl(courseGrade.getCalculatedGrade(), courseGrade.getMappedGrade(), "", true);
 	}
 }

@@ -23,6 +23,16 @@ export class AppComponent {
 		this.currentView = "courseList";
 	}
 
+	onSearchStarted(event) {
+		console.log("Search started");
+
+		this.userCourses = null;
+
+		this.courseList.setUser(null);
+		this.courseList.setCourses(null);
+		this.courseList.setSessions(null);
+	}
+
 	onSearchCompleted(event) {
 		this.userCourses = event.userCourses;
 
@@ -35,8 +45,6 @@ export class AppComponent {
 		this.courseResults.user = this.userCourses.user;
 		this.courseResults.courses = this.userCourses.courses;
 		this.courseResults.setCourseIndex(event.index);
-
-		console.log(this.courseResults.courses[event.index]);
 
 		this.currentView = "courseResults";
 	}

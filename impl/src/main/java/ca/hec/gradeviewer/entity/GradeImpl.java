@@ -1,43 +1,36 @@
 package ca.hec.gradeviewer.entity;
 
+import ca.hec.gradeviewer.util.StringUtil;
 import lombok.Getter;
 
 @Getter
 public class GradeImpl implements Grade {
 
 	private Double value;
-	private String formattedValue;
+	private String letter;
 	private String comment;
 	private boolean published;
 
-	public GradeImpl(String formattedValue, String comment, boolean published) {
-		this.formattedValue = formatValue(formattedValue);
-		this.value = tryExtractValue(this.formattedValue);
+	public GradeImpl(String value, String comment, boolean published) {
+		this.value = tryExtractValue(value);
+		this.letter = "";
 		this.comment = comment;
 		this.published = published;
 	}
 
-	public GradeImpl(String value, String formattedValue, String comment, boolean published) {
-		this.value = tryExtractValue(formatValue(value));
-		this.formattedValue = formatValue(formattedValue);
-		this.comment = comment;
-		this.published = published;
+	public GradeImpl(String value, String letter, String comment, boolean published) {
+		this(value, comment, published);
+
+		this.letter = letter;
 	}
 
 	private static Double tryExtractValue(String value) {
-		try {
-			return Double.parseDouble(value);
-		} catch (NumberFormatException e) {
-			return null;
-		}
+		return StringUtil.parseGrade(value);
 	}
 
-	private static String formatValue(String value) {
-		if (value == null) {
-			return "";
-		}
-
-		return value.replaceAll(",", ".");
+	@Override
+	public String getFormattedValue() {
+		return StringUtil.formatGrade(value);
 	}
 
 	@Override

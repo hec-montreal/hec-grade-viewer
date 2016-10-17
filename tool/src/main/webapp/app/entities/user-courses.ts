@@ -3,15 +3,25 @@ import { Course } from "./course";
 import { AcademicSession } from "./academic-session"
 
 export class UserCourses {
+	static OK: number = 0;
+
+	errorCode: number;
 	user: User;
 	courses: Course[];
 
 	constructor(json: JSON) {
-		this.user = new User(json["user"]);
-		this.courses = [];
+		this.errorCode = json["errorCode"];
 
-		for (var i = 0; i < json["courses"].length; i++) {
-			this.courses.push(new Course(json["courses"][i]));
+		if (this.errorCode === UserCourses.OK) {
+			this.user = new User(json["user"]);
+			this.courses = [];
+
+			for (var i = 0; i < json["courses"].length; i++) {
+				this.courses.push(new Course(json["courses"][i]));
+			}
+		} else {
+			this.user = null;
+			this.courses = [];
 		}
 	}
 

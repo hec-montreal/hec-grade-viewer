@@ -1,7 +1,11 @@
 <div class="search-form">
+	<div *ngIf="errorMessage.length > 0" class="alert alert-danger">
+		<strong>Erreur</strong>&nbsp;{{errorMessage}}
+	</div>
+
 	<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
 		<div class="controls">
-			<div class="form-group">
+			<div class="form-group" style="margin-bottom: 5px;">
 				<label for="matricule">Matricule*</label>
 				<input class="form-control" type="text" formControlName="matricule">
 			</div>

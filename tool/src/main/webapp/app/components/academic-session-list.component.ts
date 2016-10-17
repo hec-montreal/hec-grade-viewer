@@ -31,8 +31,12 @@ export class AcademicSessionListComponent implements OnInit {
 	}
 
 	setSessions(sessions: AcademicSession[]) {
+		if (sessions === null) {
+			sessions = [];
+		}
+
 		this.sessions = sessions;
-		this.form.controls["sessionList"].updateValueAndValidity("none");
+		this.form.controls["sessionList"].setValue("none");
 
 		this.sessionChanged.emit({
 			session: null

@@ -36,6 +36,8 @@ export class CourseResultsComponent implements OnInit {
 			new GridColumn("Commentaire", "comment")
 		];
 
+		this.grid.emptyDataSetMessage = "Aucun résultats intermédiaires définis pour ce cours";
+
 		this.grid.interactive = false;
 	}
 
@@ -101,11 +103,11 @@ export class CourseResultsComponent implements OnInit {
 		});
 
 		for (let assignment of course.assignments) {
-			rows.push(new GridRow(assignment.id, [assignment.formattedDate, assignment.name, assignment.categoryName, assignment.points.toString(), assignment.grade.formattedValue, assignment.grade.published ? "Oui" : "Non", assignment.grade.comment]));
+			rows.push(new GridRow(assignment.id, [assignment.formattedDate, assignment.name, assignment.categoryName, assignment.points.toString(), assignment.grade.getFinalValue(), assignment.grade.published ? "Oui" : "Non", assignment.grade.comment]));
 		}
 
 		if (rows.length > 0) {
-			rows.push(new GridRow("total", ["", "Total du cours", "", "", course.courseGrade.formattedValue, "", ""]));
+			rows.push(new GridRow("total", ["", "Total du cours", "", "", course.courseGrade.getFinalValue(), "", ""]));
 		}
 
 		return rows;

@@ -15,6 +15,10 @@
 		<tr *ngFor="let row of rows" class="{{interactive ? 'interactive' : ''}}" (click)="onRowClick($event)" attr.data-id="{{row.id}}">
 			<td *ngFor="let col of columns; let i = index" class="{{col.id}}">{{row.values[i]}}</td>
 		</tr>
+		
+		<tr *ngIf="columns.length > 0 && !!emptyDataSetMessage && emptyDataSetMessage.length > 0 && rows.length === 0">
+			<td class="emptyDatasetMessage" attr.colspan="{{columns.length}}">{{emptyDataSetMessage}}</td>
+		</tr>
 
 		<tr *ngFor="let defaultRow of defaultRows" class="defaultRow">
 			<td *ngFor="let col of columns"></td>

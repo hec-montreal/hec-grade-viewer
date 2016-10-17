@@ -18,6 +18,8 @@ export class GridComponent {
 	columns: GridColumn[];
 	rows: GridRow[];
 
+	emptyDataSetMessage: string;
+
 	interactive: boolean;
 
 	currentSortIndex: number;
@@ -34,7 +36,7 @@ export class GridComponent {
 		this.currentSortIndex = 0;
 		this.currentSortDirection = 0;
 
-		this.setDefaultRowCount(10);
+		this.setDefaultRowCount(0);
 	}
 
 	setDefaultRowCount(count: number) {

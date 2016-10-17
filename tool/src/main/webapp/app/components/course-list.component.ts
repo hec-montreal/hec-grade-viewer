@@ -65,8 +65,8 @@ export class CourseListComponent implements OnInit {
 	onCourseSelected(event) {
 		let courseNumber: string = event.rowId;
 
-		for(let i = 0; i < this.courses.length; i++) {
-			if(this.courses[i].number === courseNumber) {
+		for (let i = 0; i < this.courses.length; i++) {
+			if (this.courses[i].number === courseNumber) {
 				this.courseSelected.emit({
 					index: i
 				});
@@ -75,6 +75,10 @@ export class CourseListComponent implements OnInit {
 	}
 
 	makeGrid(sortIndex: number, sortDirection: number): GridRow[] {
+		if (this.courses === null) {
+			return [];
+		}
+
 		this.courses = this.courses.sort((a: Course, b: Course) => {
 			let ca: Course = sortDirection === 0 ? a : b;
 			let cb: Course = sortDirection === 0 ? b : a;
@@ -95,7 +99,7 @@ export class CourseListComponent implements OnInit {
 		let rows: GridRow[] = [];
 
 		for (let course of this.filterCourses()) {
-			rows.push(new GridRow(course.number, [course.session.name, course.number, course.description, course.courseGrade.formattedValue]));
+			rows.push(new GridRow(course.number, [course.session.name, course.number, course.description, course.courseGrade.getFinalValue()]));
 		}
 
 		return rows;

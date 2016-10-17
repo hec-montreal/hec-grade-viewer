@@ -25,7 +25,7 @@ table tbody {
 	border: 1px solid #ddd;
 }
 
-tbody tr:nth-child(odd) {
+tbody tr:nth-child(even) {
 	background-color: #eee;
 }
 
@@ -45,7 +45,19 @@ tbody tr.interactive:hover {
 	cursor: pointer;
 }
 
+tr[data-id="total"] {
+	font-weight: bold;
+}
+
+td.emptyDatasetMessage {
+	text-align: center;
+}
+
 /** Layout **/
+#app {
+	min-height: 600px;
+}
+
 .controls button {
 	width: 200px;
 }

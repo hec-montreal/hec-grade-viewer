@@ -76,6 +76,10 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 			course.setCourseGrade(gradebookService.getCourseGradeForStudent(sakaiSite.getId(), user.getId()));
 
 			for (org.sakaiproject.service.gradebook.shared.Assignment sakaiAssignment : gradebookService.getAssignments(course.getId())) {
+				if (sakaiSite.getId().equals("simon-test2")) {
+					System.out.println("debug");
+				}
+
 				Assignment assignment = new AssignmentImpl(sakaiAssignment);
 				String value = gradebookService.getAssignmentScoreString(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());
 				CommentDefinition comment = gradebookService.getAssignmentScoreComment(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());

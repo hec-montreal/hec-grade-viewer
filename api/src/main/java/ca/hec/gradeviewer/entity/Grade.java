@@ -6,6 +6,8 @@ public interface Grade {
 
 	public String getFormattedValue();
 
+	public String getLetter();
+
 	public boolean isNull();
 
 	public String getComment();

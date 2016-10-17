@@ -1,6 +1,7 @@
 export class Grade {
 	value: number;
 	formattedValue: string;
+	letter: string;
 	isNull: boolean;
 	comment: string;
 	published: boolean;
@@ -8,9 +9,20 @@ export class Grade {
 	constructor(json: JSON) {
 		this.value = json["value"];
 		this.formattedValue = json["formattedValue"];
+		this.letter = json["letter"];
 		this.isNull = json["null"];
 		this.comment = json["comment"];
 		this.published = json["published"];
+	}
+
+	getFinalValue(): string {
+		let ret: string = "";
+
+		if(!!this.letter) {
+			ret += "(" + this.letter + ") ";
+		}
+
+		return ret + this.formattedValue;
 	}
 
 	compareTo(other: Grade): number {
