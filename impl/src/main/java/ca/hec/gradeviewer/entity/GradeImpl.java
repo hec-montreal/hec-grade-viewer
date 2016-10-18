@@ -16,16 +16,16 @@ public class GradeImpl implements Grade {
 		this.letter = "";
 		this.comment = comment;
 		this.published = published;
+
+		hideValueIfUnpublished();
 	}
 
 	public GradeImpl(String value, String letter, String comment, boolean published) {
 		this(value, comment, published);
 
 		this.letter = letter;
-	}
 
-	private static Double tryExtractValue(String value) {
-		return StringUtil.parseGrade(value);
+		hideValueIfUnpublished();
 	}
 
 	@Override
@@ -36,5 +36,16 @@ public class GradeImpl implements Grade {
 	@Override
 	public boolean isNull() {
 		return value == null;
+	}
+
+	private void hideValueIfUnpublished() {
+		if (!published) {
+			value = null;
+			letter = "";
+		}
+	}
+
+	private static Double tryExtractValue(String value) {
+		return StringUtil.parseGrade(value);
 	}
 }
