@@ -101,7 +101,7 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 		org.sakaiproject.user.api.User currentUser = userDirectoryService.getCurrentUser();
 		org.sakaiproject.site.api.Site currentSite = siteService.getSite(toolManager.getCurrentPlacement().getContext());	
 		
-		if (currentUser == null) {
+		if (currentUser == null || currentSite == null) {
 			return false;
 		}
 
