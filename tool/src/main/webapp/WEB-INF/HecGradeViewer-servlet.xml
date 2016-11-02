@@ -23,5 +23,6 @@
 		<property name="gradebookService" ref="org.sakaiproject.service.gradebook.GradebookService" />
 		<property name="functionManager" ref="org.sakaiproject.authz.api.FunctionManager" />
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+		<property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
 	</bean>
 </beans>

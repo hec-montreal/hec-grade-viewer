@@ -1,5 +1,6 @@
 package ca.hec.gradeviewer.tool.controller;
 
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ca.hec.gradeviewer.GradeViewerService;
 import ca.hec.gradeviewer.entity.User;
 import ca.hec.gradeviewer.tool.entity.GradesResponse;
+import ca.hec.gradeviewer.tool.exception.SecurityException;
 
 @Controller
 public class GradeViewerController {
@@ -20,19 +22,19 @@ public class GradeViewerController {
 	private GradeViewerService gradeViewerService;
 
 	@RequestMapping(value = "/grades/{matricule}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody GradesResponse getUserGrades(@PathVariable(value = "matricule") String matricule) {
-		if (!gradeViewerService.isUserAllowed()) {
-			throw new SecurityException("User is not allowed");
-		}
-
-		User user;
-
+	public @ResponseBody GradesResponse getUserGrades(@PathVariable(value = "matricule") String matricule) throws SecurityException {
 		try {
-			user = gradeViewerService.getUserByMatricule(matricule);
+			if (!gradeViewerService.isUserAllowed()) {
+				throw new SecurityException("User is not allowed");
+			}
+
+			User user = gradeViewerService.getUserByMatricule(matricule);
+
+			return new GradesResponse(user, gradeViewerService.getUserCourses(user));
+		} catch (IdUnusedException e) {
+			return new GradesResponse(GradesResponse.ERROR_INVALID_USER);
 		} catch (UserNotDefinedException e) {
 			return new GradesResponse(GradesResponse.ERROR_INVALID_USER);
 		}
-
-		return new GradesResponse(user, gradeViewerService.getUserCourses(user));
 	}
 }

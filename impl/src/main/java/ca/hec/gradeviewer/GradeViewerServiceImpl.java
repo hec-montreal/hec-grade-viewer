@@ -10,6 +10,7 @@ import org.sakaiproject.service.gradebook.shared.CommentDefinition;
 import org.sakaiproject.service.gradebook.shared.GradebookService;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
@@ -33,6 +34,8 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	private FunctionManager functionManager = null;
 
 	private SecurityService securityService = null;
+	
+	private ToolManager toolManager = null;
 
 	@Override
 	public void init() {
@@ -94,14 +97,15 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	}
 
 	@Override
-	public boolean isUserAllowed() {
-		org.sakaiproject.user.api.User current = userDirectoryService.getCurrentUser();
-
-		if (current == null) {
+	public boolean isUserAllowed() throws IdUnusedException {
+		org.sakaiproject.user.api.User currentUser = userDirectoryService.getCurrentUser();
+		org.sakaiproject.site.api.Site currentSite = siteService.getSite(toolManager.getCurrentPlacement().getContext());	
+		
+		if (currentUser == null) {
 			return false;
 		}
 
-		return securityService.unlock(current.getId(), FUNCTION_GRADE_VIEWER_READ);
+		return securityService.unlock(currentUser.getId(), FUNCTION_GRADE_VIEWER_READ, currentSite.getReference());
 	}
 
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
@@ -122,5 +126,9 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 
 	public void setSecurityService(SecurityService securityService) {
 		this.securityService = securityService;
+	}
+	
+	public void setToolManager(ToolManager toolManager) {
+		this.toolManager = toolManager;
 	}
 }

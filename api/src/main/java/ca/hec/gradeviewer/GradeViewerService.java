@@ -21,5 +21,5 @@ public interface GradeViewerService {
 
 	public List<Course> getUserCourses(User user);
 
-	public boolean isUserAllowed();
+	public boolean isUserAllowed() throws IdUnusedException;
 }
