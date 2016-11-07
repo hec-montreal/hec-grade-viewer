@@ -30,6 +30,12 @@ public class CourseImpl implements Course {
 	}
 
 	public void setCourseGrade(CourseGrade courseGrade) {
+		if (courseGrade == null) {
+			this.courseGrade = null;
+
+			return;
+		}
+
 		this.courseGrade = new GradeImpl(courseGrade.getCalculatedGrade(), courseGrade.getMappedGrade(), "", true);
 	}
 }
