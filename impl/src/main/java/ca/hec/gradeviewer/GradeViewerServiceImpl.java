@@ -3,6 +3,8 @@ package ca.hec.gradeviewer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.exception.IdUnusedException;
@@ -34,8 +36,10 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	private FunctionManager functionManager = null;
 
 	private SecurityService securityService = null;
-	
+
 	private ToolManager toolManager = null;
+	
+	private static Log log = LogFactory.getLog(GradeViewerServiceImpl.class);
 
 	@Override
 	public void init() {
@@ -78,19 +82,27 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 
 			course.setCourseGrade(gradebookService.getCourseGradeForStudent(sakaiSite.getId(), user.getId()));
 
-			for (org.sakaiproject.service.gradebook.shared.Assignment sakaiAssignment : gradebookService.getAssignments(course.getId())) {
-				Assignment assignment = new AssignmentImpl(sakaiAssignment);
-				String value = gradebookService.getAssignmentScoreString(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());
-				CommentDefinition comment = gradebookService.getAssignmentScoreComment(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());
+			List<org.sakaiproject.service.gradebook.shared.Assignment> assignments = null;
 
-				Grade grade = new GradeImpl(value, comment == null ? "" : comment.getCommentText(), sakaiAssignment.isReleased());
+			try {
+				assignments = gradebookService.getAssignments(course.getId());
+				
+				for (org.sakaiproject.service.gradebook.shared.Assignment sakaiAssignment : assignments) {
+					Assignment assignment = new AssignmentImpl(sakaiAssignment);
+					String value = gradebookService.getAssignmentScoreString(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());
+					CommentDefinition comment = gradebookService.getAssignmentScoreComment(sakaiSite.getId(), sakaiAssignment.getId(), user.getId());
 
-				assignment.setGrade(grade);
+					Grade grade = new GradeImpl(value, comment == null ? "" : comment.getCommentText(), sakaiAssignment.isReleased());
 
-				course.getAssignments().add(assignment);
+					assignment.setGrade(grade);
+
+					course.getAssignments().add(assignment);
+				}
+
+				ret.add(course);
+			} catch (Exception e) {
+				log.info("Impossible to get assignments for course " + course.getId());
 			}
-
-			ret.add(course);
 		}
 
 		return ret;
@@ -99,8 +111,8 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	@Override
 	public boolean isUserAllowed() throws IdUnusedException {
 		org.sakaiproject.user.api.User currentUser = userDirectoryService.getCurrentUser();
-		org.sakaiproject.site.api.Site currentSite = siteService.getSite(toolManager.getCurrentPlacement().getContext());	
-		
+		org.sakaiproject.site.api.Site currentSite = siteService.getSite(toolManager.getCurrentPlacement().getContext());
+
 		if (currentUser == null || currentSite == null) {
 			return false;
 		}
@@ -127,7 +139,7 @@ public class GradeViewerServiceImpl implements GradeViewerService {
 	public void setSecurityService(SecurityService securityService) {
 		this.securityService = securityService;
 	}
-	
+
 	public void setToolManager(ToolManager toolManager) {
 		this.toolManager = toolManager;
 	}
