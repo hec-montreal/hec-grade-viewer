@@ -1,53 +1,46 @@
 {
-  "name": "hec-grade-viewer",
-  "version": "1.0.0",
-  "description": "HEC Grade Viewer",
-  "main": "gulpfile.js",
-  
-  
-  "dependencies": {
-    "@angular/common": "~2.0.1",
-    "@angular/compiler": "~2.0.1",
-    "@angular/core": "~2.0.1",
-    "@angular/forms": "~2.0.1",
-    "@angular/http": "~2.0.1",
-    "@angular/platform-browser": "~2.0.1",
-    "@angular/platform-browser-dynamic": "~2.0.1",
-    "@angular/router": "~3.0.1",
-    "@angular/upgrade": "~2.0.1",
-    "angular-in-memory-web-api": "~0.1.1",
-    "bootstrap": "^3.3.7",
-    "core-js": "^2.4.1",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.39",
-    "zone.js": "^0.6.25",
-    
-    "gulp": "3.9.1",
-    "gulp-typescript": "3.0.1",
-    "gulp-angular-templatecache": "2.0.0",
-    "gulp-autoprefixer": "3.1.1",
-    "gulp-browserify": "0.5.1",
-    "gulp-concat": "2.6.0",
-    "gulp-ruby-sass": "2.1.0",
-    "gulp-sass": "2.3.2",
-    "gulp-sourcemaps": "1.6.0",
-    "gulp-util": "3.0.7",
-    "modernizr": "3.3.1"
-  },
-  "devDependencies": {
-     "concurrently": "^3.0.0",
-     "typescript": "^2.0.3",
-     "typings":"^1.4.0"
-  },
-  "scripts": {
-   "postinstall": "typings install",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "typings": "typings",
-    
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Mame Awa Diop",
-  "license": "ISC"
+	"name": "hec-grade-viewer",
+	"version": "1.0.0",
+	"description": "HEC Grade Viewer",
+	"main": "gulpfile.js",
+
+	"dependencies": {
+		"@angular/common": "~2.0.1",
+		"@angular/compiler": "~2.0.1",
+		"@angular/core": "~2.0.1",
+		"@angular/forms": "~2.0.1",
+		"@angular/http": "~2.0.1",
+		"@angular/platform-browser": "~2.0.1",
+		"@angular/platform-browser-dynamic": "~2.0.1",
+		"@angular/router": "~3.0.1",
+		"@angular/upgrade": "~2.0.1",
+		"angular-in-memory-web-api": "~0.1.1",
+		"bootstrap": "^3.3.7",
+		"core-js": "^2.4.1",
+		"reflect-metadata": "^0.1.8",
+		"rxjs": "5.0.0-beta.12",
+		"systemjs": "0.19.39",
+		"zone.js": "^0.6.25",
+
+		"gulp": "3.9.1",
+		"gulp-typescript": "3.0.1",
+		"gulp-angular-templatecache": "2.0.0",
+		"gulp-autoprefixer": "3.1.1",
+		"gulp-browserify": "0.5.1",
+		"gulp-concat": "2.6.0",
+		"gulp-sass": "2.3.2",
+		"gulp-sourcemaps": "1.6.0",
+		"gulp-util": "3.0.7",
+		"del": "2.2.2",
+		"vinyl-paths": "2.1.0",
+		"modernizr": "3.3.1"
+	},
+
+	"devDependencies": {
+		"concurrently": "^3.0.0",
+		"typescript": "^2.0.3",
+		"typings": "^1.4.0"
+	},
+
+	"author": "Mame Awa Diop"
 }

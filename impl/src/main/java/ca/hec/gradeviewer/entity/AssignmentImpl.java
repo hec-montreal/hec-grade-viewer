@@ -3,68 +3,37 @@ package ca.hec.gradeviewer.entity;
 import java.util.Date;
 
 import ca.hec.gradeviewer.util.DateUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class AssignmentImpl implements Assignment {
 
 	private String id;
 	private String name;
-	private Date date;
+	private long date;
 	private String categoryId;
 	private String categoryName;
 	private double points;
+
+	@Setter
 	private Grade grade;
 
 	public AssignmentImpl(org.sakaiproject.service.gradebook.shared.Assignment assignment) {
 		this.id = assignment.getId().toString();
 		this.name = assignment.getName();
 		this.points = assignment.getPoints();
-		this.date = assignment.getDueDate();
+		this.date = assignment.getDueDate() != null ? assignment.getDueDate().getTime() : 0;
 		this.categoryId = assignment.getCategoryId() == null ? "" : assignment.getCategoryId().toString();
-		this.categoryName = assignment.getCategoryName();
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public Date getDate() {
-		return date;
+		this.categoryName = assignment.getCategoryName() == null ? "" : assignment.getCategoryName();
 	}
 
 	@Override
 	public String getFormattedDate() {
-		return DateUtil.formatDate(getDate());
-	}
+		if (date == 0) {
+			return "";
+		}
 
-	@Override
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	@Override
-	public double getPoints() {
-		return points;
-	}
-
-	@Override
-	public Grade getGrade() {
-		return grade;
-	}
-
-	@Override
-	public void setGrade(Grade grade) {
-		this.grade = grade;
+		return DateUtil.formatDate(new Date(date));
 	}
 }

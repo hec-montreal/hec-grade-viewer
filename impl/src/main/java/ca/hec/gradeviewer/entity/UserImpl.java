@@ -1,5 +1,8 @@
 package ca.hec.gradeviewer.entity;
 
+import lombok.Getter;
+
+@Getter
 public class UserImpl implements User {
 
 	private String id;
@@ -10,20 +13,5 @@ public class UserImpl implements User {
 		this.id = user.getId();
 		this.matricule = user.getEid();
 		this.fullName = user.getDisplayName();
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public String getMatricule() {
-		return matricule;
-	}
-
-	@Override
-	public String getFullName() {
-		return fullName;
 	}
 }

@@ -1,0 +1,25 @@
+<div id="app" class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>Consultation des résultats intermédiaires</h1>
+		</div>
+	</div>
+
+	<div class="row" [hidden]="currentView !== 'courseList'">
+		<div class="col-xs-12 col-md-4">
+			<search-form (searchStarted)="onSearchStarted($event)" (searchCompleted)="onSearchCompleted($event)"></search-form>
+		</div>
+	</div>
+
+	<div class="row" [hidden]="currentView !== 'courseList'">
+		<div class="col-xs-12 col-md-10">
+			<course-list (courseSelected)="onCourseSelected($event)"></course-list>
+		</div>
+	</div>
+
+	<div class="row" [hidden]="currentView !== 'courseResults'">
+		<div class="col-xs-12 col-md-10">
+			<course-results (backRequested)="onCourseResultsBackRequested($event)"></course-results>
+		</div>
+	</div>
+</div>

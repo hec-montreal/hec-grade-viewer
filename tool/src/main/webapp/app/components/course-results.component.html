@@ -1,0 +1,24 @@
+<div class="course-results">
+	<div class="identifier" style="margin-bottom: 20px;">
+		<div>
+			<span class="bold">Matricule:</span>
+			<span *ngIf="!!user">{{user.matricule}}</span>
+		</div>
+
+		<div>
+			<span class="bold">Nom:</span>
+			<span *ngIf="!!user">{{user.fullName}}</span>
+		</div>
+
+		<div class="no-select">
+			<span class="bold">Cours:</span>
+			<span *ngIf="!!courses && courses.length > 0"><span class="glyphicon glyphicon-chevron-left action" (click)="onPreviousCourse()"></span>{{courses[courseIndex].number}}&nbsp;-&nbsp;{{courses[courseIndex].description}}<span class="glyphicon glyphicon-chevron-right action" (click)="onNextCourse()"></span></span>
+		</div>
+	</div>
+
+	<div style="margin-bottom: 10px;">
+		<button type="button" (click)="onBackClicked($event)"><span class="glyphicon glyphicon-chevron-left"></span>Retour à la liste des cours</button>
+	</div>
+
+	<grid (sortRequested)="onAssignmentsSort($event)"></grid>
+</div>

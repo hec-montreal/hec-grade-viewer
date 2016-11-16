@@ -1,29 +1,36 @@
 package ca.hec.gradeviewer.entity;
 
+import ca.hec.gradeviewer.util.StringUtil;
+import lombok.Getter;
+
+@Getter
 public class GradeImpl implements Grade {
 
-	private String value;
+	private Double value;
+	private String letter;
 	private String comment;
 	private boolean published;
 
 	public GradeImpl(String value, String comment, boolean published) {
-		this.value = value;
+		this.value = tryExtractValue(value);
+		this.letter = "";
 		this.comment = comment;
 		this.published = published;
+
+		hideValueIfUnpublished();
 	}
 
-	@Override
-	public String getValue() {
-		return value;
+	public GradeImpl(String value, String letter, String comment, boolean published) {
+		this(value, comment, published);
+
+		this.letter = letter;
+
+		hideValueIfUnpublished();
 	}
 
 	@Override
 	public String getFormattedValue() {
-		if (value == null) {
-			return "";
-		}
-
-		return value.replaceAll(",", ".");
+		return StringUtil.formatGrade(value);
 	}
 
 	@Override
@@ -31,13 +38,14 @@ public class GradeImpl implements Grade {
 		return value == null;
 	}
 
-	@Override
-	public String getComment() {
-		return comment;
+	private void hideValueIfUnpublished() {
+		if (!published) {
+			value = null;
+			letter = "";
+		}
 	}
 
-	@Override
-	public boolean isPublished() {
-		return published;
+	private static Double tryExtractValue(String value) {
+		return StringUtil.parseGrade(value);
 	}
 }

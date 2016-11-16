@@ -10,7 +10,13 @@ public interface Course {
 
 	public String getDescription();
 
-	public String getSession();
+	public AcademicSession getSession();
+
+	public String getNumber();
 
 	public List<Assignment> getAssignments();
+
+	public Grade getCourseGrade();
+
+	void setCourseGrade(org.sakaiproject.service.gradebook.shared.CourseGrade courseGrade);
 }

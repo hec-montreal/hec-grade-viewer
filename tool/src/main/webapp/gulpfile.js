@@ -1,142 +1,102 @@
-'use strict';
+"use strict";
 
-var gulp         = require('gulp'),
-    gutil        = require('gulp-util'),
-    sass         = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    concat       = require('gulp-concat'),
-    config       = require('./config.json'),
-    sourcemaps   = require('gulp-sourcemaps'),
-    templateCache = require('gulp-angular-templatecache'),
-    // embedTemplates = require('gulp-angular-embed-templates'),
-    //uglify        = require('gulp-uglify'),
-    // browserify    = require('gulp-browserify'),
-    ts            = require('gulp-typescript'),
-    browserify    = require('browserify');
-    //source        = require('vinyl-source-stream');
- 
+var gulp = require("gulp"),
+	gutil = require("gulp-util"),
+	sass = require("gulp-sass"),
+	autoprefixer = require("gulp-autoprefixer"),
+	concat = require("gulp-concat"),
+	sourcemaps = require("gulp-sourcemaps"),
+	templateCache = require("gulp-angular-templatecache"),
+	ts = require("gulp-typescript"),
+	browserify = require("browserify"),
+	del = require("del"),
+	vinylPaths = require('vinyl-paths'),
+	// Build config
+	config = require("./gulp.config.json");
 
+var dest = function (suffix) {
+	return "./dest/" + suffix;
+};
 
-// Locale  task
-gulp.task('locale', function() {
-  return gulp.src([
-    './node_modules/angular-i18n/angular-locale_fr-ca.js',
-    './node_modules/angular-i18n/angular-locale_en-ca.js'
-    ])
-  .pipe(gulp.dest( './dest/lib/locale'));
+// Clean
+gulp.task("clean:dest", function() {
+	return gulp.src(dest("*"))
+		.pipe(vinylPaths(del));
 });
 
+// Librairies
+gulp.task("lib", ["lib:js", "lib:js:rxjs", "lib:js:angular"]);
 
-// lib css task
-gulp.task('csslib', function() {
-  return gulp.src([
-    './source/lib/bootstrap/css/bootstrap.css',
-    './source/lib/angular-ui-tree/angular-ui-tree.min.css'
-    ])
-  .pipe(gulp.dest( './dest/lib/css'));
+gulp.task("lib:js", ["clean:dest"], function() {
+	return gulp.src([
+			"./node_modules/core-js/client/shim.min.js",
+			"./node_modules/zone.js/dist/zone.js",
+			"./node_modules/reflect-metadata/Reflect.js",
+			"./node_modules/systemjs/dist/system.src.js",
+			"./systemjs.config.js"
+		])
+		.pipe(gulp.dest(dest("lib")));
 });
 
-// lib css task
-gulp.task('fonts', function() {
-  return gulp.src([
-    './source/lib/bootstrap/fonts/*'
-    ])
-  .pipe(gulp.dest( './dest/lib/fonts'));
+gulp.task("lib:js:rxjs", ["clean:dest"], function() {
+	return gulp.src(["./node_modules/rxjs/**/*.js"])
+		.pipe(gulp.dest(dest("lib/rxjs")));
 });
 
-
-// Concat all lib and nodes modules
-gulp.task('jslib', function() {
-  return gulp.src([
-   './node_modules/core-js/client/shim.min.js',
-   './node_modules/zone.js/dist/zone.js',
-   './node_modules/reflect-metadata/Reflect.js',
-   './node_modules/systemjs/dist/system.src.js',
-   './node_modules/@angular/*'
-    ])
-  .pipe(gulp.dest( './dest/lib'));
+gulp.task("lib:js:angular", ["clean:dest"], function() {
+	return gulp.src(["./node_modules/@angular/**/bundles/**.min.js"])
+		.pipe(gulp.dest(dest("lib/@angular")));
 });
 
-// Jsp task
-gulp.task('jsp', function() {
-  return gulp.src('./source/index.jsp')
-  .pipe(gulp.dest( './dest'));
+// Application
+gulp.task("app", ["app:index", "app:js", "app:html", "app:webinf", "app:sakaitools", "app:sass", "app:img"]);
+
+gulp.task("app:index", ["clean:dest"], function() {
+	return gulp.src("./index.jsp")
+		.pipe(gulp.dest(dest("")));
 });
 
-
-//Ts tasks
-gulp.task('module', function() {
-    return gulp.src([ 
-     'source/module/*.ts'
-     ])
-    .pipe(ts({
-      'experimentalDecorators' : true
-    }))
-    .pipe(gulp.dest('./dest/module'));
+gulp.task("app:js", ["clean:dest"], function() {
+	return gulp.src(["./app/**/*.ts"])
+		.pipe(ts({
+			"experimentalDecorators": true
+		}))
+		.pipe(gulp.dest(dest("app")));
 });
 
-gulp.task('component', function() {
-    return gulp.src([ 
-     'source/component/*.ts',
-     ])
-    .pipe(ts({
-      'experimentalDecorators' : true
-    }))
-    .pipe(gulp.dest('./dest/component'));
+gulp.task("app:html", ["clean:dest"], function() {
+	return gulp.src(["./app/**/*.html"])
+		.pipe(gulp.dest(dest("app")));
 });
 
-gulp.task('app', function() {
-    return gulp.src([ 
-     'source/*.ts',
-     ])
-   .pipe(ts({
-      'experimentalDecorators' : true
-    }))
-    .pipe(gulp.dest('./dest'));
+gulp.task("app:webinf", ["clean:dest"], function() {
+	return gulp.src(["./WEB-INF/*"])
+		.pipe(gulp.dest(dest("WEB-INF")));
 });
 
-//SAKAI TOOL RELATED - web-inf task
-gulp.task('web-inf', function() {
-    return gulp.src(['./WEB-INF/*'])
-    .pipe(gulp.dest('./dest/WEB-INF'));
+gulp.task("app:sakaitools", ["clean:dest"], function() {
+	return gulp.src(["./tools/*"])
+		.pipe(gulp.dest(dest("tools")));
 });
 
-//SAKAI TOOL RELATED - tool task
-gulp.task('tools', function() {
-    return gulp.src(['./tools/*'])
-    .pipe(gulp.dest('./dest/tools'));
+gulp.task("app:sass", ["clean:dest"], function() {
+	return gulp.src("./sass/**/*.scss")
+		.pipe(sass().on("error", sass.logError))
+		.pipe(gulp.dest(dest("css")));
 });
 
-//sass task
-gulp.task('sass', function () {
-  return sass('./source/scss/*.scss', { sourcemap: true })
-    .on('error', sass.logError)
-    .pipe(autoprefixer({
-            browsers: ['last 2 versions']
-        }))
-    // .pipe(sourcemaps.write())
-    .pipe(gulp.dest( './dest/css'));
+gulp.task("app:img", ["clean:dest"], function() {
+	return gulp.src("./img/*")
+		.pipe(gulp.dest(dest("img")));
 });
 
+// Build
+gulp.task("build", ["lib", "app"]);
 
-// Copy
-gulp.task('copy', function () {
-    return gulp.src(['./dest/**/*'])
-     .pipe(gulp.dest(config.tomcat));
+// Tomcat
+gulp.task("tomcat", ["tomcat:copy"]);
+
+gulp.task("tomcat:copy", ["build"], function() {
+	return gulp.src(["./dest/**/*"])
+		.pipe(gulp.dest(config.tomcatDir));
 });
-
-
-
-gulp.task('copy-deploy',['deploy-maven'] , function(){
-  gutil.log('Source déployée sur tomcat!');
-  
-  return gulp.src(['./dest/**/*'])
-  .pipe(gulp.dest(config.tomcat));
-});
-
-gulp.task('deploy-maven',['module', 'component', 'app', 'jslib', 'web-inf','tools','jsp', 'copy'] , function(){
-	  gutil.log('Source déployée sur tomcat avec maven!');
-});
-
-
- 

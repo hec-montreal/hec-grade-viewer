@@ -3,15 +3,21 @@ package ca.hec.gradeviewer.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.hec.gradeviewer.util.StringUtil;
+import org.sakaiproject.service.gradebook.shared.CourseGrade;
 
+import ca.hec.gradeviewer.util.StringUtil;
+import lombok.Getter;
+
+@Getter
 public class CourseImpl implements Course {
 
 	private String id;
 	private String title;
 	private String description;
-	private String session;
+	private AcademicSession session;
+	private String number;
 	private List<Assignment> assignments;
+	private Grade courseGrade;
 
 	public CourseImpl(org.sakaiproject.site.api.Site site) {
 		this.assignments = new ArrayList<>();
@@ -19,28 +25,17 @@ public class CourseImpl implements Course {
 		this.id = site.getId();
 		this.title = site.getTitle();
 		this.description = StringUtil.valOrEmptyString(site.getProperties().getProperty("title"));
-		this.session = StringUtil.valOrEmptyString(site.getProperties().getProperty("term"));
+		this.session = new AcademicSessionImpl(StringUtil.valOrEmptyString(site.getProperties().getProperty("term")));
+		this.number = this.title;
 	}
 
-	public String getId() {
-		return id;
-	}
+	public void setCourseGrade(CourseGrade courseGrade) {
+		if (courseGrade == null) {
+			this.courseGrade = null;
 
-	public String getTitle() {
-		return title;
-	}
+			return;
+		}
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
-
-	public String getSession() {
-		return session;
-	}
-
-	@Override
-	public List<Assignment> getAssignments() {
-		return assignments;
+		this.courseGrade = new GradeImpl(courseGrade.getCalculatedGrade(), courseGrade.getMappedGrade(), "", true);
 	}
 }

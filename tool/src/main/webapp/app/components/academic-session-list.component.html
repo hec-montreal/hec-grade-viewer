@@ -1,0 +1,8 @@
+<label for="sessionList">Session</label>
+
+<form [formGroup]="form">
+	<select class="form-control" formControlName="sessionList" (change)="onSessionChanged($event)">
+		<option value="none">Afficher toutes les sessions</option>
+		<option *ngFor="let session of sessions" value="{{session.code}}">{{session.name}}</option>
+	</select>
+</form>
